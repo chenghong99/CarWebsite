@@ -90,3 +90,13 @@ def edit(request, id):
     context["status"] = status
  
     return render(request, "app/edit.html", context)
+
+# Create your views here.
+def login(request):
+    """Shows the login page"""
+    return render(request,'app/login.html')
+
+    # Create your views here.
+def signup(request):
+    """Shows the login page"""
+    return render(request,'app/signup.html')
