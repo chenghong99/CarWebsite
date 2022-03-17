@@ -92,6 +92,7 @@ def edit(request, id):
     return render(request, "app/edit.html", context)
 
 # Create your views here.
+## Bug cannot insert into table
 def login(request):
     """Shows the login page"""
     return render(request,'app/login.html')
@@ -99,4 +100,25 @@ def login(request):
     # Create your views here.
 def signup(request):
     """Shows the login page"""
-    return render(request,'app/signup.html')
+    context = {} 
+    status = ''
+
+    if request.POST:
+        ## Check if customerid is already in the table
+        with connection.cursor() as cursor:
+
+            cursor.execute("SELECT * FROM userinfo WHERE email = %s", [request.POST['email']])
+            customer = cursor.fetchone()
+            ## No customer with same id
+            if customer == None:
+                ##TODO: age validation
+                cursor.execute("INSERT INTO userinfo VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                        , [request.POST['userID'], request.POST['firstName'], request.POST['lastName'],
+                           request.POST['email'] , request.POST['DOB'], request.POST['password'], request.POST['confirmPassword'] ])
+                return redirect('index')    
+            else:
+                status = 'Customer with email %s already exists' % (request.POST['email'])
+
+
+    context['status'] = status
+    return render(request,'app/signup.html', context)
