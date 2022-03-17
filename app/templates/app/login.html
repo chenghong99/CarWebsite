@@ -2,7 +2,13 @@
     {% load static %}
     <link rel ="stylesheet" href="{% static "login.css" %}">
     <div class="imgcontainer">
-      <img src="app\static\app\images\nus.jpg" alt="NUs" class="avatar">
+      <img src="{% static 'app/images/carrental.png' %}" alt="Nus" width="10%" height="50%"class="avatar">
+    </div>
+
+    <div class="home">
+      <button class="home"><a href="index">Home Page</a></button>
+      <button class="signup"><a href="signup">Sign up an account</a></button>
+    </div>
     </div>
   
     <div class="container">
@@ -20,7 +26,6 @@
   
     <div class="container" style="background-color:#f1f1f1">
       <button type="button" class="cancelbtn">Cancel</button>
-      <span class="signupbtn"><a href="signup">Sign Up</a></span>
       <span class="psw">Forgot <a href="#">password?</a></span>
     </div>
   </form>

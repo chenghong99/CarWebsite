@@ -21,8 +21,8 @@ import app.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', app.views.index, name='index'),
-    path('login', app.views.login, name='login'),
+    path('', app.views.login, name='login'),
+    path('index', app.views.index, name='index'),
     path('signup', app.views.signup, name='signup'),
     path('add', app.views.add, name='add'),
     path('view/<str:id>', app.views.view, name='view'),
