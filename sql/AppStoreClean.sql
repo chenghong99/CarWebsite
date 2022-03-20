@@ -4,6 +4,6 @@
 
 *******************/
 
-DROP TABLE IF EXISTS downloads;
-DROP TABLE IF EXISTS games;
-DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS downloads CASCADE;
+DROP TABLE IF EXISTS games CASCADE;
+DROP TABLE IF EXISTS customers CASCADE;

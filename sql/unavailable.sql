@@ -1,0 +1,10 @@
+insert into unavailable (car_vin, owner, unavailable) values ('3N1AB6AP3AL362912', 'ksprulls4@fda.gov', '2022-12-14');
+insert into unavailable (car_vin, owner, unavailable) values ('3N1AB6AP3AL362912', 'ksprulls4@fda.gov', '2023-01-24');
+insert into unavailable (car_vin, owner, unavailable) values ('3N1AB6AP3AL362912', 'ksprulls4@fda.gov', '2023-01-10');
+insert into unavailable (car_vin, owner, unavailable) values ('JN8AZ2KRXBT327366', 'awarry9@statcounter.com', '02/03/2023');
+insert into unavailable (car_vin, owner, unavailable) values ('JN8AZ2KRXBT327366', 'awarry9@statcounter.com', '2022-09-22');
+insert into unavailable (car_vin, owner, unavailable) values ('5N1AN0NU1CN694265', 'awarry9@statcounter.com', '2022-09-23');
+insert into unavailable (car_vin, owner, unavailable) values ('5N1AN0NU1CN694265', 'awarry9@statcounter.com', '2022-08-04');
+insert into unavailable (car_vin, owner, unavailable) values ('WA1LMBFE7ED541878', 'sbompass8@cnet.com', '2022-12-23');
+insert into unavailable (car_vin, owner, unavailable) values ('WAUSFAFL2BA782648', 'sbompass8@cnet.com', '2022-12-07');
+insert into unavailable (car_vin, owner, unavailable) values ('WAUSFAFL2BA782648', 'sbompass8@cnet.com', '2022-08-17');

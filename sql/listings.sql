@@ -1,0 +1,10 @@
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('3N1AB6AP3AL362912', 'Isuzu', 'Ascender', 2007, 80643, 50026, 'ksprulls4@fda.gov');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('5UMDU93557L734848', 'Volvo', 'XC70', 2007, 51820, 19742, 'ksprulls4@fda.gov');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('1N6AD0CU3FN047703', 'Nissan', 'Titan', 2004, 78648, 53456, 'adimond5@twitpic.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('3FADP0L3XBR853159', 'Dodge', 'Ram 50', 1993, 38823, 16470, 'jgailor7@rediff.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('5N1AR2MM8FC452719', 'Subaru', 'Tribeca', 2011, 70290, 35423, 'jgailor7@rediff.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WAUSFAFL2BA782648', 'Volkswagen', 'Cabriolet', 2002, 34712, 86578, 'sbompass8@cnet.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WA1LMBFE7ED541878', 'Hyundai', 'Elantra', 2003, 44723, 23456, 'sbompass8@cnet.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('JN8AS1MU7AM855309', 'Chrysler', 'Town & Country', 1993, 47443, 35895, 'sbompass8@cnet.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('5N1AN0NU1CN694265', 'Chevrolet', 'Suburban 1500', 1995, 19175, 45717, 'awarry9@statcounter.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('JN8AZ2KRXBT327366', 'Audi', 'TT', 2011, 59961, 62219, 'awarry9@statcounter.com');
