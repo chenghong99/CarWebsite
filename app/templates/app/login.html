@@ -1,4 +1,6 @@
-<form action="action_page.php" method="GET">
+{% if page == 'login' %}
+<form action="" method="POST">
+  {% csrf_token %}
     {% load static %}
     <link rel ="stylesheet" href="{% static "login.css" %}">
     <div class="imgcontainer">

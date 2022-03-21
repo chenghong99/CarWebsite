@@ -1,5 +1,9 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.db import connection
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def index(request):
@@ -92,26 +96,60 @@ def edit(request, id):
     return render(request, "app/edit.html", context)
 
 # Create your views here.
-## Bug cannot insert into table
+# Bug cannot insert into table
 def login(request):
     """Shows the login page"""
-    context = {} 
-    status = ''
 
-    if request.POST:
-        ## Check if customerid is already in the table
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM customer WHERE email = %s AND password = %s", [request.POST['email']], [request.POST['password']])
-            customer = cursor.fetchone()
-            ## No customer with same id
-            if customer == None:
-                status = 'Invalid email or password'
-            else:
-                return redirect("index")
+    page = 'login'
+    if request.user.is_authenticated:
+        return redirect(index)
 
+    if request.method == "POST":
+        email = request.POST.get("email").lower()
+        password = request.POST.get("password")
 
-    context['status'] = status
+        try:
+            user = User.objects.get(email=email)
+        except:
+            messages.error(request, 'User does not exist')
+
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Username OR password does not exit')
+
+    context = {'page': page}
     return render(request,'app/login.html', context)
+
+   # Create your views here.
+# def login(request):
+#     """Shows the login page"""
+#     context = {} 
+#     status = ''
+
+#     if request.POST:
+#         ## Check if customerid is already in the table
+#         with connection.cursor() as cursor:
+
+#             cursor.execute("SELECT * FROM customer WHERE email = %s AND password = %s", [request.POST['email']], [request.POST['email']])
+#             customer = cursor.fetchone()
+#             ## No customer with same id
+#             if customer != None:
+#                 ##TODO: age validation
+#                 cursor.execute("INSERT INTO customer VALUES (%s, %s, %s, %s, %s, %s, %s)"
+#                         , [request.POST['firstName'], request.POST['lastName'], request.POST['username'],
+#                            request.POST['DOB'] , request.POST['psw'], request.POST['psw-repeat'], request.POST['email'] ])
+#                 return redirect('index')    
+#             else:
+#                 status = 'Customer with email %s already exists' % (request.POST['email'])
+
+
+#     context['status'] = status
+#     return render(request,'app/signup.html', context)
+
 
     # Create your views here.
 def signup(request):
@@ -126,7 +164,13 @@ def signup(request):
             cursor.execute("SELECT * FROM customer WHERE email = %s", [request.POST['email']])
             customer = cursor.fetchone()
             ## No customer with same id
-            if customer == None:
+            date_time_obj = datetime.fromisoformat(request.POST['DOB'])
+            datetime.fromisoformat(request.POST['DOB'])
+            if request.POST['psw'] != request.POST['psw-repeat']:
+                status = 'Password do not match'
+            # elif ((datetime.now().date - date_time_obj).days // 365 < 18):
+            #     status = 'Age limt less than 18'
+            elif customer == None:
                 ##TODO: age validation
                 cursor.execute("INSERT INTO customer VALUES (%s, %s, %s, %s, %s, %s, %s)"
                         , [request.POST['firstName'], request.POST['lastName'], request.POST['username'],
