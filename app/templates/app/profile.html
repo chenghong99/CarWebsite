@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- <link rel ="stylesheet" href="{% static "profile.css" %}"> -->
+    {% load static %}
+    <link rel ="stylesheet" href="{% static "profile.css" %}">
     <link rel ="stylesheet" href="C:\Users\cheng\Desktop\CarWebsite\AppStore\app\static\profile.css">
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
@@ -56,8 +57,10 @@
       <div class="col-lg-4">
         <div class="card shadow-sm">
           <div class="card-header bg-transparent text-center">
-            <img class="profile_img" src="C:\Users\cheng\Desktop\CarWebsite\AppStore\app\static\app\images\nus.jpg" alt="customer dp">
+            <!-- <img class="profile_img" src="C:\Users\cheng\Desktop\CarWebsite\AppStore\app\static\app\images\nus.jpg" alt="customer dp"> -->
+            <img class="profile_img" src="{% static 'app/images/nus.jpg' %}" alt="customer dp">
             <h3>(Customer name)</h3>
+            <h3><a href="editpersonalinfo">Edit</a></h3>
           </div>
           <div class="card-body">
             <p class="mb-0"><strong class="pr-1">Username:</strong>321000001</p>
@@ -71,7 +74,7 @@
           <div class="cardheader">
             <i class="far fa-clone pr-1"></i>
             <h3>Personal Car Information</h3>
-            <a href="index" id = "edit" title="Back to tutorial page">Edit</a>
+            <a href="editpersonalcarinfo" id = "edit" title="Back to tutorial page">Edit</a>
           </div>
           <div class="card-body pt-0">
             <table class="table table-bordered">
@@ -112,7 +115,7 @@
           <div class="card shadow-sm">
             <div class="cardheader">
               <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Rental Car Information</h3>
-              <a href="index" id = "edit" title="Back to tutorial page">Edit</a>
+              <a href="editrentalcarinfo" id = "edit" title="edit">Edit</a>
             </div>
             <div class="card-body pt-0">
               <table class="table table-bordered">

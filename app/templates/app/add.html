@@ -1,7 +1,9 @@
 <html>
 <body>
     <h2>Add New Customer</h2>
-    <a href="/">Back to home</a>
+    <a href="index">Back to home</a>
+    {% load static %}
+    <link rel ="stylesheet" href="{% static "login.css" %}">
 
     <p style="color:red">{{ status|safe }}</p>
     <!-- Create a Form -->

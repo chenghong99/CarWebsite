@@ -95,7 +95,23 @@ def edit(request, id):
 ## Bug cannot insert into table
 def login(request):
     """Shows the login page"""
-    return render(request,'app/login.html')
+    context = {} 
+    status = ''
+
+    if request.POST:
+        ## Check if customerid is already in the table
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM customer WHERE email = %s AND password = %s", [request.POST['email']], [request.POST['password']])
+            customer = cursor.fetchone()
+            ## No customer with same id
+            if customer == None:
+                status = 'Invalid email or password'
+            else:
+                return redirect("index")
+
+
+    context['status'] = status
+    return render(request,'app/login.html', context)
 
     # Create your views here.
 def signup(request):
@@ -107,14 +123,14 @@ def signup(request):
         ## Check if customerid is already in the table
         with connection.cursor() as cursor:
 
-            cursor.execute("SELECT * FROM userinfo WHERE email = %s", [request.POST['email']])
+            cursor.execute("SELECT * FROM customer WHERE email = %s", [request.POST['email']])
             customer = cursor.fetchone()
             ## No customer with same id
             if customer == None:
                 ##TODO: age validation
-                cursor.execute("INSERT INTO userinfo VALUES (%s, %s, %s, %s, %s, %s, %s)"
-                        , [request.POST['userID'], request.POST['firstName'], request.POST['lastName'],
-                           request.POST['email'] , request.POST['DOB'], request.POST['password'], request.POST['confirmPassword'] ])
+                cursor.execute("INSERT INTO customer VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                        , [request.POST['firstName'], request.POST['lastName'], request.POST['username'],
+                           request.POST['DOB'] , request.POST['psw'], request.POST['psw-repeat'], request.POST['email'] ])
                 return redirect('index')    
             else:
                 status = 'Customer with email %s already exists' % (request.POST['email'])
@@ -122,3 +138,25 @@ def signup(request):
 
     context['status'] = status
     return render(request,'app/signup.html', context)
+
+def profile(request):
+    """Shows the profile page"""
+
+    return render(request,'app/profile.html')
+
+def editpersonalinfo(request):
+    """Shows the editpersonalinfo page"""
+
+    return render(request,'app/editpersonalinfo.html')
+
+def editpersonalcarinfo(request):
+    """Shows the editpersonalcarinfo page"""
+
+    return render(request,'app/editpersonalcarinfo.html')
+
+def editrentalcarinfo(request):
+    """Shows the editrentalcarinfo page"""
+
+    return render(request,'app/editrentalcarinfo.html')
+
+    

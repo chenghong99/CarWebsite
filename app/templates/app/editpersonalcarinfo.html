@@ -1,0 +1,34 @@
+<html>
+    {% load static %}
+    <link rel ="stylesheet" href="{% static "login.css" %}">
+<body>
+    <h2>Edit {{obj.5}}</h2>
+    <a href="profile">Back to home</a>
+
+    <p style="color:red">{{ status|safe }}</p>
+
+    <!-- Create a Form -->
+    <form method="POST">
+        <!-- Security token by Django -->
+        {% csrf_token %}
+        <!-- form -->
+        <div id="div_id_carvin" class="control-group"> <label for="id_carvin" class="control-label requiredField">
+        Car VIN<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="carvin" value="{{obj.2}}" maxlength="64" class="textinput textInput" required="" id="id_carvin"> </div> </div> 
+
+        <div id="div_id_carmake" class="control-group"> <label for="id_carmake" class="control-label requiredField">
+        Car Make<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="carmake" value="{{obj.0}}" maxlength="64" class="textinput textInput" required="" id="id_carmake"> </div> </div> 
+
+        <div id="div_id_carmodel" class="control-group"> <label for="id_carmodel" class="control-label requiredField">
+        Car Model<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="carmodel" value="{{obj.0}}" maxlength="64" class="textinput textInput" required="" id="id_carmodel"> </div> </div> 
+        
+        <div id="div_id_year" class="control-group"> <label for="id_year" class="control-label requiredField">
+        Year<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="year" value="{{obj.2}}" maxlength="64" class="textinput textInput" required="" id="id_year"> </div> </div> 
+        
+        <div id="div_id_rate" class="control-group"> <label for="id_rate" class="control-label requiredField">
+        Rate<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="rate" value="{{obj.3|slugify}}" class="dateinput" required="" id="id_rate"> </div> </div> 
+
+        <br>
+        <button type="submit" value="Update">Update</button>
+    </form>
+</body>
+</html>

@@ -1,12 +1,12 @@
-<form action="action_page.php" method="post">
+<form action="action_page.php" method="GET">
     {% load static %}
     <link rel ="stylesheet" href="{% static "login.css" %}">
     <div class="imgcontainer">
-      <img src="{% static 'app/images/carrental.png' %}" alt="Nus" width="10%" height="50%"class="avatar">
+      <img src="{% static 'app/images/carrental.png' %}" alt="Nus" width="200" height="500" class="avatar">
     </div>
 
-    <div class="home">
-      <button class="home"><a href="index">Home Page</a></button>
+    <div class="container">
+      <button><a href="index">Home Page</a></button>
       <button class="signup"><a href="signup">Sign up an account</a></button>
     </div>
     </div>
@@ -18,7 +18,7 @@
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" required>
   
-      <button type="submit">Login</button>
+      <button type="submit"><a href="index">Login</a></button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>

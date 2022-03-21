@@ -25,6 +25,12 @@ urlpatterns = [
     path('index', app.views.index, name='index'),
     path('signup', app.views.signup, name='signup'),
     path('add', app.views.add, name='add'),
+    path('login', app.views.login, name='login'),
+    path('editpersonalinfo', app.views.editpersonalinfo, name='editpersonalinfo'),
+    path('editpersonalcarinfo', app.views.editpersonalcarinfo, name='editpersonalcarinfo'),
+    path('editrentalcarinfo', app.views.editrentalcarinfo, name='editrentalcarinfo'),
+    path('profile', app.views.profile, name='profile'),
     path('view/<str:id>', app.views.view, name='view'),
     path('edit/<str:id>', app.views.edit, name='edit'),
 ]
+
