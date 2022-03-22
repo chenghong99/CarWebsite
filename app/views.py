@@ -97,32 +97,37 @@ def edit(request, id):
 
 # Create your views here.
 # Bug cannot insert into table
+# def login(request):
+#     """Shows the login page"""
+
+#     page = 'login'
+#     if request.user.is_authenticated:
+#         return redirect(index)
+
+#     if request.method == "POST":
+#         email = request.POST.get("email").lower()
+#         password = request.POST.get("password")
+
+#         try:
+#             user = User.objects.get(email=email)
+#         except:
+#             messages.error(request, 'User does not exist')
+
+#         user = authenticate(request, email=email, password=password)
+
+#         if user is not None:
+#             login(request, user)
+#             return redirect('home')
+#         else:
+#             messages.error(request, 'Username OR password does not exit')
+
+#     context = {'page': page}
+#     return render(request,'app/login.html', context)
+
 def login(request):
-    """Shows the login page"""
+     """Shows the login page"""
 
-    page = 'login'
-    if request.user.is_authenticated:
-        return redirect(index)
-
-    if request.method == "POST":
-        email = request.POST.get("email").lower()
-        password = request.POST.get("password")
-
-        try:
-            user = User.objects.get(email=email)
-        except:
-            messages.error(request, 'User does not exist')
-
-        user = authenticate(request, email=email, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('home')
-        else:
-            messages.error(request, 'Username OR password does not exit')
-
-    context = {'page': page}
-    return render(request,'app/login.html', context)
+     return render(request,'app/login.html')
 
    # Create your views here.
 # def login(request):
