@@ -102,67 +102,6 @@ def edit(request, id):
  
     return render(request, "app/edit.html", context)
 
-# Create your views here.
-# Bug cannot insert into table
-# def login(request):
-#     """Shows the login page"""
-
-#     page = 'login'
-#     if request.user.is_authenticated:
-#         return redirect(index)
-
-#     if request.method == "POST":
-#         email = request.POST.get("email").lower()
-#         password = request.POST.get("password")
-
-#         try:
-#             user = User.objects.get(email=email)
-#         except:
-#             messages.error(request, 'User does not exist')
-
-#         user = authenticate(request, email=email, password=password)
-
-#         if user is not None:
-#             login(request, user)
-#             return redirect('home')
-#         else:
-#             messages.error(request, 'Username OR password does not exit')
-
-#     context = {'page': page}
-#     return render(request,'app/login.html', context)
-
-# def login(request):
-#      """Shows the login page"""
-
-#      return render(request,'app/login.html')
-
-   # Create your views here.
-# def login(request):
-#     """Shows the login page"""
-#     context = {} 
-#     status = ''
-
-#     if request.POST:
-#         ## Check if customerid is already in the table
-#         with connection.cursor() as cursor:
-#             email = request.POST["uname"]
-#             password = request.POST["psw"]
-
-#             cursor.execute("SELECT * FROM customer WHERE email = %s", email,)
-#             customer = cursor.fetchone()
-#             ## No customer with same id
-#             if customer != None:
-#                 ##TODO: age validation
-#                 cursor.execute("INSERT INTO customer VALUES (%s, %s, %s, %s, %s, %s, %s)"
-#                         , [request.POST['firstName'], request.POST['lastName'], request.POST['username'],
-#                            request.POST['DOB'] , request.POST['psw'], request.POST['psw-repeat'], request.POST['email'] ])
-#                 return redirect('index')    
-#             else:
-#                 status = 'Customer with email %s already exists' % (request.POST['email'])
-
-
-#     context['status'] = status
-#     return render(request,'app/signup.html', context)
 
 def login(request):
      """Shows the login page"""
@@ -203,6 +142,65 @@ def logout_page(request):
     logout(request)
     return redirect('login')
     
+
+##To test out
+def signup(request):
+
+    if request.method == 'POST':
+        # Ensure password matches confirmation
+        first_name = request.POST.get('firstName')
+        last_name = request.POST.get('lastName')
+        username = request.POST.get('username')
+        DOB = request.POST.get('DOB')
+        email = request.POST.get('email').lower()
+        password = request.POST.get('psw')
+        confirm_password = request.POST.get('psw-repeat')
+
+        if password != confirm_password:
+            messages.error(request, 'Passwords do not match!')
+            return render(request, 'app/signup.html')
+
+        with connection.cursor() as cursor:
+            try:
+                cursor.execute("INSERT INTO customer VALUES (%s, %s, %s, %s, %s, %s, %s)", 
+                [first_name, last_name, username, DOB, password, confirm_password, email])
+
+            except Exception as e:
+                err = str(e)
+                message = err
+
+                if 'duplicate key value violates unique constraint "users_pkey' in err:
+                    message = 'Customer email already exists'
+                elif 'new row for relation "customer" violates check constraint "customer_email_check"' in err:
+                    message = 'Please enter a valid email address!'
+                messages.error(request, message)
+                return render(request, 'app/signup.html')
+            user = User.objects.create_user(email, password = password)
+            user.save()
+            messages.success(request, 'Account has been successfully registered!')
+            return redirect('index')
+    return render(request, 'app/signup.html')
+
+def profile(request):
+    """Shows the profile page"""
+
+    return render(request,'app/profile.html')
+
+def editpersonalinfo(request):
+    """Shows the editpersonalinfo page"""
+
+    return render(request,'app/editpersonalinfo.html')
+
+def editpersonalcarinfo(request):
+    """Shows the editpersonalcarinfo page"""
+
+    return render(request,'app/editpersonalcarinfo.html')
+
+def editrentalcarinfo(request):
+    """Shows the editrentalcarinfo page"""
+
+    return render(request,'app/editrentalcarinfo.html')
+
 # def login(request):
 # 	if request.method == "POST":
 # 		form = AuthenticationForm(request, data=request.POST)
@@ -276,62 +274,65 @@ def logout_page(request):
 #     context['status'] = status
 #     return render(request,'app/signup.html', context)
 
-##To test out
-def signup(request):
+# Create your views here.
+# Bug cannot insert into table
+# def login(request):
+#     """Shows the login page"""
 
-    if request.method == 'POST':
-        # Ensure password matches confirmation
-        first_name = request.POST.get('firstName')
-        last_name = request.POST.get('lastName')
-        username = request.POST.get('username')
-        DOB = request.POST.get('DOB')
-        email = request.POST.get('email').lower()
-        password = request.POST.get('psw')
-        confirm_password = request.POST.get('psw-repeat')
+#     page = 'login'
+#     if request.user.is_authenticated:
+#         return redirect(index)
 
-        if password != confirm_password:
-            messages.error(request, 'Passwords do not match!')
-            return render(request, 'app/signup.html')
+#     if request.method == "POST":
+#         email = request.POST.get("email").lower()
+#         password = request.POST.get("password")
 
-        with connection.cursor() as cursor:
-            try:
-                cursor.execute("INSERT INTO customer VALUES (%s, %s, %s, %s, %s, %s, %s)", 
-                [first_name, last_name, username, DOB, password, confirm_password, email])
+#         try:
+#             user = User.objects.get(email=email)
+#         except:
+#             messages.error(request, 'User does not exist')
 
-            except Exception as e:
-                err = str(e)
-                message = err
+#         user = authenticate(request, email=email, password=password)
 
-                if 'duplicate key value violates unique constraint "users_pkey' in err:
-                    message = 'Customer email already exists'
-                elif 'new row for relation "customer" violates check constraint "customer_email_check"' in err:
-                    message = 'Please enter a valid email address!'
-                messages.error(request, message)
-                return render(request, 'app/signup.html')
-            user = User.objects.create_user(email, password = password)
-            user.save()
-            messages.success(request, 'Account has been successfully registered!')
-            return redirect('index')
-    return render(request, 'app/signup.html')
+#         if user is not None:
+#             login(request, user)
+#             return redirect('home')
+#         else:
+#             messages.error(request, 'Username OR password does not exit')
 
-def profile(request):
-    """Shows the profile page"""
+#     context = {'page': page}
+#     return render(request,'app/login.html', context)
 
-    return render(request,'app/profile.html')
+# def login(request):
+#      """Shows the login page"""
 
-def editpersonalinfo(request):
-    """Shows the editpersonalinfo page"""
+#      return render(request,'app/login.html')
 
-    return render(request,'app/editpersonalinfo.html')
+   # Create your views here.
+# def login(request):
+#     """Shows the login page"""
+#     context = {} 
+#     status = ''
 
-def editpersonalcarinfo(request):
-    """Shows the editpersonalcarinfo page"""
+#     if request.POST:
+#         ## Check if customerid is already in the table
+#         with connection.cursor() as cursor:
+#             email = request.POST["uname"]
+#             password = request.POST["psw"]
 
-    return render(request,'app/editpersonalcarinfo.html')
+#             cursor.execute("SELECT * FROM customer WHERE email = %s", email,)
+#             customer = cursor.fetchone()
+#             ## No customer with same id
+#             if customer != None:
+#                 ##TODO: age validation
+#                 cursor.execute("INSERT INTO customer VALUES (%s, %s, %s, %s, %s, %s, %s)"
+#                         , [request.POST['firstName'], request.POST['lastName'], request.POST['username'],
+#                            request.POST['DOB'] , request.POST['psw'], request.POST['psw-repeat'], request.POST['email'] ])
+#                 return redirect('index')    
+#             else:
+#                 status = 'Customer with email %s already exists' % (request.POST['email'])
 
-def editrentalcarinfo(request):
-    """Shows the editrentalcarinfo page"""
 
-    return render(request,'app/editrentalcarinfo.html')
-
+#     context['status'] = status
+#     return render(request,'app/signup.html', context)
     
