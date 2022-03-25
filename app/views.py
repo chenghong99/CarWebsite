@@ -9,7 +9,6 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm #add this
 from django.contrib.auth import login as auth_login
-from matplotlib.style import context
 
 
 # Create your views here.
