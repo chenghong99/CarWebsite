@@ -6,7 +6,11 @@ CREATE TABLE IF NOT EXISTS customer(
     password VARCHAR(32) NOT NULL,
     confirmPassword VARCHAR(32) NOT NULL ,
     CONSTRAINT pw_match CHECK(confirmPassword = password),
-    email VARCHAR(256) PRIMARY KEY CHECK (email LIKE '%_@_%._%')
+    email VARCHAR(256) PRIMARY KEY CHECK (email LIKE '%_@_%._%'),
+    mobile_number INT NOT NULL CHECK ((mobile_number BETWEEN 30000000 AND 39999999) OR
+									  (mobile_number BETWEEN 60000000 AND 69999999) OR
+									  (mobile_number BETWEEN 80000000 AND 89999999) OR
+									  (mobile_number BETWEEN 90000000 AND 98999999))
 );
 
 CREATE TABLE IF NOT EXISTS listings (

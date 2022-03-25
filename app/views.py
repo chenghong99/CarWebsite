@@ -1,4 +1,5 @@
 from datetime import datetime
+import email
 from tkinter import EXCEPTION
 from tokenize import String
 from django.shortcuts import render, redirect
@@ -10,6 +11,7 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm #add this
 from django.contrib.auth import login as auth_login
+from matplotlib.style import context
 
 
 # Create your views here.
@@ -153,6 +155,7 @@ def signup(request):
         username = request.POST.get('username')
         DOB = request.POST.get('DOB')
         email = request.POST.get('email').lower()
+        number = request.POST.get('number')
         password = request.POST.get('psw')
         confirm_password = request.POST.get('psw-repeat')
 
@@ -162,34 +165,96 @@ def signup(request):
 
         with connection.cursor() as cursor:
             try:
-                cursor.execute("INSERT INTO customer VALUES (%s, %s, %s, %s, %s, %s, %s)", 
-                [first_name, last_name, username, DOB, password, confirm_password, email])
+                cursor.execute("INSERT INTO customer VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", 
+                [first_name, last_name, username, DOB, password, confirm_password, email, number])
 
             except Exception as e:
                 err = str(e)
                 message = err
-
-                if 'duplicate key value violates unique constraint "users_pkey' in err:
+            
+                if 'duplicate key value violates unique constraint "customer_pkey"' in err:
                     message = 'Customer email already exists'
+                elif 'duplicate key value violates unique constraint "customer_username_key"' in err:
+                    message = 'Customer username already exists'
+                elif 'duplicate key value violates unique constraint "auth_user_username_key"' in err:
+                    message = 'Customer username already exists'
                 elif 'new row for relation "customer" violates check constraint "customer_email_check"' in err:
                     message = 'Please enter a valid email address!'
+                elif 'new row for relation "customer" violates check constraint "customer_mobile_number_check"' in err:
+                    message = 'Please enter a valid phone number'
+                elif 'new row for relation "customer" violates check constraint "customer_dob_check"' in err:
+                    message = 'Age below 18'
                 messages.error(request, message)
                 return render(request, 'app/signup.html')
             user = User.objects.create_user(email, password = password)
             user.save()
             messages.success(request, 'Account has been successfully registered!')
-            return redirect('index')
+            return redirect('login')
     return render(request, 'app/signup.html')
 
+@login_required(login_url= 'login')
 def profile(request):
     """Shows the profile page"""
+    email = request.user.username
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM customer WHERE email = %s", [email])
+        cust = cursor.fetchone()
+    context ={'first_name' : cust[0], 'last_name' : cust[1], 'username' : cust[2],
+    'dob' : cust[3], 'email' : cust[6], 'number' : cust[7]}
 
-    return render(request,'app/profile.html')
+    return render(request,'app/profile.html', context)
 
+@login_required(login_url = 'login')
 def editpersonalinfo(request):
     """Shows the editpersonalinfo page"""
+    email = request.user.username
+    # fetch the object related to passed id
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM customer WHERE email = %s", [email])
+        cust = cursor.fetchone()
+    context ={'first_name' : cust[0], 'last_name' : cust[1], 'username' : cust[2], 'phonenumber' : cust[7]}
 
-    return render(request,'app/editpersonalinfo.html')
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        phonenumber = request.POST.get('phonenumber')
+        context['first_name'] = first_name
+        context['last_name'] = last_name
+        context['username'] = username
+        context['phonenumber'] = phonenumber
+	
+        if first_name == cust[0] and last_name == cust[1] and username == cust[2] and phonenumber == cust[7]:
+            messages.error(request, 'New profile is identical to the old one!') 
+            return render(request, 'app/change_profile.html', context)
+	
+        with connection.cursor() as cursor:
+            try:
+                cursor.execute("UPDATE customer SET first_name = %s, last_name = %s, username = %s, mobile_number = %s WHERE email = %s", [first_name, last_name, username, phonenumber, email])
+		
+            except Exception as e:
+                string = str(e)
+                message = string
+		
+                if 'new row for relation "customer" violates check constraint "customer_mobile_number_check"' in string:
+                    message = 'Please enter a valid Singapore number!'
+		
+                elif 'out of range for type integer' in string:
+                    message = 'Please enter a valid Singapore number!'
+
+                elif 'out of range for type integer' in string:
+                    message = 'Please enter a valid Singapore number!'
+
+                elif 'duplicate key value violates unique constraint "customer_username_key"' in string:
+                    message = 'Customer username taken!'
+		
+                messages.error(request, message) 
+                return render(request, 'app/editpersonalinfo.html', context)
+	
+            messages.success(request, 'Profile has been successfully updated!')
+            return redirect('profile')    
+
+    return render(request,'app/editpersonalinfo.html', context)
 
 def editpersonalcarinfo(request):
     """Shows the editpersonalcarinfo page"""
@@ -201,138 +266,34 @@ def editrentalcarinfo(request):
 
     return render(request,'app/editrentalcarinfo.html')
 
-# def login(request):
-# 	if request.method == "POST":
-# 		form = AuthenticationForm(request, data=request.POST)
-# 		if form.is_valid():
-# 			username = form.cleaned_data.get('username')
-# 			password = form.cleaned_data.get('password')
-# 			user = authenticate(username=username, password=password)
-# 			if user is not None:
-# 				auth_login(request, user)
-# 				messages.info(request, f"You are now logged in as {username}.")
-# 				return redirect("index")
-# 			else:
-# 				messages.error(request,"Invalid username or password.")
-# 		else:
-# 			messages.error(request,"Invalid username or password.")
-# 	form = AuthenticationForm()
-# 	return render(request=request, template_name="login.html", context={"login_form":form})
+@login_required(login_url = 'login')
+def addcar(request):
+    if request.method == 'POST':
+        # Ensure password matches confirmation
+        email = request.user.username
+        car_vin = request.POST.get('car_vin')
+        carmake = request.POST.get('carmake')
+        carmodel = request.POST.get('model')
+        year = request.POST.get('year')
+        mileage = request.POST.get('mileage')
+        rate = request.POST.get('rate')
 
-
-# def login(request):
-#     email = request.POST.get('uname').lower()
-#     password = request.POST.get('psw')
-#         # try: 
-#         #     user = User.objects.get(username = email)
-#         # except:
-#         #     messages.error(request, 'Invalid email address')
-#         #     return render(request, 'app/login.html')  
-#     user = authenticate(request, username = email, password = password)
-#     if user != None:
-#         with connection.cursor() as cursor:
-#             cursor.execute("SELECT * FROM customer WHERE email = %s", [email,])
-#             customer = cursor.fetchone()
-#             login(request, user)
-#             return redirect("index")
-#     else:
-#         messages.error(request, 'Wrong password')
-#         return render(request, 'app/login.html')
-#     return render(request,'app/login.html')
-    
-
-
-    # Create your views here.
-# def signup(request):
-#     """Shows the login page"""
-#     context = {} 
-#     status = ''
-
-#     if request.POST:
-#         ## Check if customerid is already in the table
-#         with connection.cursor() as cursor:
-
-#             cursor.execute("SELECT * FROM customer WHERE email = %s", [request.POST['email']])
-#             customer = cursor.fetchone()
-#             ## No customer with same id
-#             date_time_obj = datetime.fromisoformat(request.POST['DOB'])
-#             datetime.fromisoformat(request.POST['DOB'])
-#             if request.POST['psw'] != request.POST['psw-repeat']:
-#                 status = 'Password do not match'
-#             # elif ((datetime.now().date - date_time_obj).days // 365 < 18):
-#             #     status = 'Age limt less than 18'
-#             elif customer == None:
-#                 ##TODO: age validation
-#                 cursor.execute("INSERT INTO customer VALUES (%s, %s, %s, %s, %s, %s, %s)"
-#                         , [request.POST['firstName'], request.POST['lastName'], request.POST['username'],
-#                            request.POST['DOB'] , request.POST['psw'], request.POST['psw-repeat'], request.POST['email'] ])
-#                 return redirect('index')    
-#             else:
-#                 status = 'Customer with email %s already exists' % (request.POST['email'])
-
-
-#     context['status'] = status
-#     return render(request,'app/signup.html', context)
-
-# Create your views here.
-# Bug cannot insert into table
-# def login(request):
-#     """Shows the login page"""
-
-#     page = 'login'
-#     if request.user.is_authenticated:
-#         return redirect(index)
-
-#     if request.method == "POST":
-#         email = request.POST.get("email").lower()
-#         password = request.POST.get("password")
-
-#         try:
-#             user = User.objects.get(email=email)
-#         except:
-#             messages.error(request, 'User does not exist')
-
-#         user = authenticate(request, email=email, password=password)
-
-#         if user is not None:
-#             login(request, user)
-#             return redirect('home')
-#         else:
-#             messages.error(request, 'Username OR password does not exit')
-
-#     context = {'page': page}
-#     return render(request,'app/login.html', context)
-
-# def login(request):
-#      """Shows the login page"""
-
-#      return render(request,'app/login.html')
-
-   # Create your views here.
-# def login(request):
-#     """Shows the login page"""
-#     context = {} 
-#     status = ''
-
-#     if request.POST:
-#         ## Check if customerid is already in the table
-#         with connection.cursor() as cursor:
-#             email = request.POST["uname"]
-#             password = request.POST["psw"]
-
-#             cursor.execute("SELECT * FROM customer WHERE email = %s", email,)
-#             customer = cursor.fetchone()
-#             ## No customer with same id
-#             if customer != None:
-#                 ##TODO: age validation
-#                 cursor.execute("INSERT INTO customer VALUES (%s, %s, %s, %s, %s, %s, %s)"
-#                         , [request.POST['firstName'], request.POST['lastName'], request.POST['username'],
-#                            request.POST['DOB'] , request.POST['psw'], request.POST['psw-repeat'], request.POST['email'] ])
-#                 return redirect('index')    
-#             else:
-#                 status = 'Customer with email %s already exists' % (request.POST['email'])
-
-
-#     context['status'] = status
-#     return render(request,'app/signup.html', context)
-    
+        with connection.cursor() as cursor:
+            try:
+                cursor.execute("INSERT INTO listings VALUES (%s, %s, %s, %s, %s, %s, %s)", 
+                [car_vin, carmake, carmodel, year, mileage, rate, email])
+            except Exception as e:
+                err = str(e)
+                message = err
+            
+                if 'new row for relation "listings" violates check constraint "listings_mileage_check"' in err:
+                    message = 'Invalid milaeage'
+                elif 'new row for relation "listings" violates check constraint "listings_rate_check"' in err:
+                    message = 'Invalid rate'
+                elif 'new row for relation "listings" violates check constraint "listings_year_check"' in err:
+                    message = 'Invalid year'
+                messages.error(request, message)
+                return render(request, 'app/addcar.html')
+            messages.success(request, 'Car succesfully listed')
+            return redirect('addcar')
+    return render(request, 'app/addcar.html')

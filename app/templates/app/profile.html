@@ -1,15 +1,19 @@
-{% extends 'main.html' %}
 
 {% block content %}
 {% load static %}
 <body>
     <h1>Profile</h1>
+    <a href="index">Back</a>
+    <br/><br/>
     <div>
-        <label>Name: {{name}}</label><br>
+        <label>First Name: {{first_name}}</label><br>
+        <label>Last Name: {{last_name}}</label><br>
+        <label>Username: {{username}}</label><br>
         <label>Email Address: {{email}}</label><br>
+        <label>Date of Birth: {{dob}}</label><br>
         <label>Phone Number: {{number}}</label><br>
     </div>
-    <a href = "{% url 'change_profile' %}">Change profile</a><br>
-    <a href = "{% url 'change_password' %}">Change password</a>
+    <a href = "{% url 'editpersonalinfo' %}">Edit profile</a>
+    <a href = "{% url 'addcar' %}">Add Car</a>
 </body>
 {% endblock %}

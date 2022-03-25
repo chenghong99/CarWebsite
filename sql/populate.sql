@@ -1,14 +1,14 @@
 
-insert into customers (first_name, last_name, username, dob, password, confirmpassword, email) values ('Martyn', 'Van der Spohr', 'mvanderspohr0', '8/10/2001', 'b0tbG1wm7YzZ', 'b0tbG1wm7YzZ', 'mvanderspohr0@google.ca');
-insert into customers (first_name, last_name, username, dob, password, confirmpassword, email) values ('Ben', 'McVeigh', 'bmcveigh1', '3/3/2001', 'PWdKZvjhJ', 'PWdKZvjhJ', 'bmcveigh1@fema.gov');
-insert into customers (first_name, last_name, username, dob, password, confirmpassword, email) values ('Clair', 'Scutter', 'cscutter2', '10/12/2001', 'ZKyyUGrahIkf', 'ZKyyUGrahIkf', 'cscutter2@vinaora.com');
-insert into customers (first_name, last_name, username, dob, password, confirmpassword, email) values ('Marinna', 'Greathead', 'mgreathead3', '10/12/2001', 'faROy6iNYg0w', 'faROy6iNYg0w', 'mgreathead3@chronoengine.com');
-insert into customers (first_name, last_name, username, dob, password, confirmpassword, email) values ('Keith', 'Sprulls', 'ksprulls4', '6/2/2001', 'V7fwCF8s', 'V7fwCF8s', 'ksprulls4@fda.gov');
-insert into customers (first_name, last_name, username, dob, password, confirmpassword, email) values ('Arlin', 'Dimond', 'adimond5', '1/1/2002', 'HwjmCMgNKBG', 'HwjmCMgNKBG', 'adimond5@twitpic.com');
-insert into customers (first_name, last_name, username, dob, password, confirmpassword, email) values ('Jerri', 'Esel', 'jesel6', '3/9/2002', '4MbgJ9COTBOL', '4MbgJ9COTBOL', 'jesel6@squidoo.com');
-insert into customers (first_name, last_name, username, dob, password, confirmpassword, email) values ('Jarred', 'Gailor', 'jgailor7', '10/2/2001', 'RMgzpcr', 'RMgzpcr', 'jgailor7@rediff.com');
-insert into customers (first_name, last_name, username, dob, password, confirmpassword, email) values ('Saunders', 'Bompass', 'sbompass8', '8/9/2001', 'wShpblV', 'wShpblV', 'sbompass8@cnet.com');
-insert into customers (first_name, last_name, username, dob, password, confirmpassword, email) values ('Amy', 'Warry', 'awarry9', '1/11/2002', 'ZZvye03xvN8', 'ZZvye03xvN8', 'awarry9@statcounter.com');
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Martyn', 'Van der Spohr', 'mvanderspohr0', '8/10/2001', 'b0tbG1wm7YzZ', 'b0tbG1wm7YzZ', 'mvanderspohr0@google.ca', 85553642);
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Ben', 'McVeigh', 'bmcveigh1', '3/3/2001', 'PWdKZvjhJ', 'PWdKZvjhJ', 'bmcveigh1@fema.gov', 85553642);
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Clair', 'Scutter', 'cscutter2', '10/12/2001', 'ZKyyUGrahIkf', 'ZKyyUGrahIkf', 'cscutter2@vinaora.com');
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Marinna', 'Greathead', 'mgreathead3', '10/12/2001', 'faROy6iNYg0w', 'faROy6iNYg0w', 'mgreathead3@chronoengine.com', 85553643);
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Keith', 'Sprulls', 'ksprulls4', '6/2/2001', 'V7fwCF8s', 'V7fwCF8s', 'ksprulls4@fda.gov', 85553644);
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Arlin', 'Dimond', 'adimond5', '1/1/2002', 'HwjmCMgNKBG', 'HwjmCMgNKBG', 'adimond5@twitpic.com', 85553645);
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Jerri', 'Esel', 'jesel6', '3/9/2002', '4MbgJ9COTBOL', '4MbgJ9COTBOL', 'jesel6@squidoo.com', 85553646);
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Jarred', 'Gailor', 'jgailor7', '10/2/2001', 'RMgzpcr', 'RMgzpcr', 'jgailor7@rediff.com', 85553647);
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Saunders', 'Bompass', 'sbompass8', '8/9/2001', 'wShpblV', 'wShpblV', 'sbompass8@cnet.com', 85553648);
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Amy', 'Warry', 'awarry9', '1/11/2002', 'ZZvye03xvN8', 'ZZvye03xvN8', 'awarry9@statcounter.com', 85553649);
 
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('3N1AB6AP3AL362912', 'Isuzu', 'Ascender', 2007, 80643, 50026, 'ksprulls4@fda.gov');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('5UMDU93557L734848', 'Volvo', 'XC70', 2007, 51820, 19742, 'ksprulls4@fda.gov');

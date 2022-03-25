@@ -1,11 +1,18 @@
-<html>
-    {% load static %}
-    <link rel ="stylesheet" href="{% static "login.css" %}">
-<body>
-    <h2>Edit {{obj.5}}</h2>
-    <a href="/">Back to home</a>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
-    <p style="color:red">{{ status|safe }}</p>
+{% block content %}
+{% load static %}
+
+<html>
+<body>
+    <h2>Edit</h2>
+    <a href="profile">Back to profile</a>
 
     <!-- Create a Form -->
     <form method="POST">
@@ -13,22 +20,21 @@
         {% csrf_token %}
         <!-- form -->
         <div id="div_id_username" class="control-group"> <label for="id_username" class="control-label requiredField">
-        Username<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="username" value="{{obj.2}}" maxlength="64" class="textinput textInput" required="" id="id_username"> </div> </div> 
+        Username<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="username" value="{{username}}" maxlength="64" class="textinput textInput" required="" id="id_username"> </div> </div> 
 
         <div id="div_id_first_name" class="control-group"> <label for="id_first_name" class="control-label requiredField">
-        First Name<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="first_name" value="{{obj.0}}" maxlength="64" class="textinput textInput" required="" id="id_first_name"> </div> </div> 
+        First Name<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="first_name" value="{{first_name}}" maxlength="64" class="textinput textInput" required="" id="id_first_name"> </div> </div> 
 
         <div id="div_id_last_name" class="control-group"> <label for="id_last_name" class="control-label requiredField">
-        Last Name<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="last_name" value="{{obj.0}}" maxlength="64" class="textinput textInput" required="" id="id_last_name"> </div> </div> 
-        
-        <div id="div_id_email" class="control-group"> <label for="id_email" class="control-label requiredField">
-        Email<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="email" value="{{obj.2}}" maxlength="64" class="textinput textInput" required="" id="id_email"> </div> </div> 
-        
-        <div id="div_id_dob" class="control-group"> <label for="id_dob" class="control-label requiredField">
-        Date of birth (yyyy-mm-dd)<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="dob" value="{{obj.3|slugify}}" class="dateinput" required="" id="id_dob"> </div> </div> 
+        Last Name<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="last_name" value="{{last_name}}" maxlength="64" class="textinput textInput" required="" id="id_last_name"> </div> </div> 
 
+        <div id="div_id_phone_number" class="control-group"> <label for="id_phone_number" class="control-label requiredField">
+        Phone Number<span class="asteriskField">*</span> </label> <div class="controls"> <input type="number" name="phonenumber" value="{{phonenumber}}"  required="" id="id_phone_number"> </div> </div> 
+
+        <input type = "submit" value = "Confirm changes"/>
         <br>
-        <button type="submit" value="Update">Update</button>
+        <!-- <button type="submit" value="Update">Update</button> -->
     </form>
 </body>
 </html>
+{% endblock %}

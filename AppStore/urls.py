@@ -27,6 +27,7 @@ urlpatterns = [
     path('logout/', app.views.logout_page, name = "logout"),
     path('add', app.views.add, name='add'),
     path('login', app.views.login, name='login'),
+    path('addcar', app.views.addcar, name='addcar'),
     path('editpersonalinfo', app.views.editpersonalinfo, name='editpersonalinfo'),
     path('editpersonalcarinfo', app.views.editpersonalcarinfo, name='editpersonalcarinfo'),
     path('editrentalcarinfo', app.views.editrentalcarinfo, name='editrentalcarinfo'),

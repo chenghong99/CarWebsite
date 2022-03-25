@@ -1,0 +1,42 @@
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+  
+  
+  </body>
+  <form style="border:1px solid #ccc" method="POST" action = "">
+      {% csrf_token %} 
+      <div class="container">
+        <h1>List Car</h1>
+        <p>Please fill in this form to list car for rental.</p>
+        <a href="profile">Back</a>
+        <hr>
+        
+        <label for="car_vin"><b>Car VIN</b><span class="asteriskField">*</span></label>
+        <input type="text" placeholder="Enter Car VIN" name="car_vin" maxlength="256" required>
+  
+        <label for="carmake"><b>Car Make</b><span class="asteriskField">*</label>
+        <input type="text" placeholder="Enter Car make" name="carmake" maxlength="64" required>
+  
+        <label for="model"><b>Car Model</b><span class="asteriskField">*</label>
+        <input type="text" placeholder="Enter year" name="model" maxlength="64" required>
+
+        <label for="year"><b>Car Year</b><span class="asteriskField">*</label>
+            <input type="number" placeholder="Enter year" name="year" maxlength="64" required>
+  
+        <label for="mileage"><b>Mileage</b><span class="asteriskField">*</span></label>
+        <input type="number" placeholder="Enter mileage" name="mileage" maxlength="256" required>
+  
+        <label for="rate"><b>Rental Rate</b><span class="asteriskField">*</label>
+        <input type="number" placeholder="Enter Rental Rate" name="rate" required>
+        <input type = "submit" value = "list"/>
+
+    
+        <p>By listing you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+      </div>
+    </form>
