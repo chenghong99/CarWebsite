@@ -1,6 +1,4 @@
 from datetime import datetime
-import email
-from tkinter import EXCEPTION
 from tokenize import String
 from django.shortcuts import render, redirect
 from django.db import connection
