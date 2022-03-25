@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS customer(
     password VARCHAR(32) NOT NULL,
     confirmPassword VARCHAR(32) NOT NULL ,
     CONSTRAINT pw_match CHECK(confirmPassword = password),
-    email VARCHAR(256) PRIMARY KEY
+    email VARCHAR(256) PRIMARY KEY CHECK (email LIKE '%_@_%._%')
 );
 
 CREATE TABLE IF NOT EXISTS listings (
