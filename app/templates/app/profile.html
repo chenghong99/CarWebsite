@@ -6,6 +6,7 @@
     <a href="index">Back</a>
     <br/><br/>
     <div>
+        <h1>Personal Information</h1>
         <label>First Name: {{first_name}}</label><br>
         <label>Last Name: {{last_name}}</label><br>
         <label>Username: {{username}}</label><br>
@@ -15,5 +16,32 @@
     </div>
     <a href = "{% url 'editpersonalinfo' %}">Edit profile</a>
     <a href = "{% url 'addcar' %}">Add Car</a>
+    <div>
+        <h1>Car Information</h1>
+    </div>
+    <table border=1>
+        <thead>
+            <th>Car VIN</th>
+            <th>Car Make</th>
+            <th>Car Model</th>
+            <th>Year</th>
+            <th>Mileage</th>
+            <th>Rate</th>
+            <th>Action</th>
+        </thead>
+        {% for car in records %}
+        <tr>
+            <td> {{ car.0 }} </td>
+            <td> {{ car.1 }} </td>
+            <td> {{ car.2 }} </td>
+            <td> {{ car.3 }} </td>
+            <td> {{ car.4 }} </td>
+            <td> {{ car.5 }} </td>
+            <td>
+                <a href="editpersonalcarinfo/{{car.0}}"><button>Edit</button></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 {% endblock %}

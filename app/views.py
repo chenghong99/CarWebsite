@@ -130,7 +130,11 @@ def login(request):
             with connection.cursor() as cursor:
                 cursor.execute("SELECT * FROM customer WHERE email = %s", [email])
                 loginform(request, user)
-                return redirect("index")
+
+                if email == "useradmin@carwebsite.com":
+                    return redirect("admin")
+                else:
+                    return redirect("index")
         else:
             messages.error(request, 'Wrong password')
             return render(request, 'app/login.html')
@@ -196,8 +200,15 @@ def profile(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM customer WHERE email = %s", [email])
         cust = cursor.fetchone()
-    context ={'first_name' : cust[0], 'last_name' : cust[1], 'username' : cust[2],
-    'dob' : cust[3], 'email' : cust[6], 'number' : cust[7]}
+    with connection.cursor() as cursor:
+        try:
+            cursor.execute("SELECT * FROM listings WHERE owner = %s", [email])
+            car = cursor.fetchall()
+            context ={'first_name' : cust[0], 'last_name' : cust[1], 'username' : cust[2],
+            'dob' : cust[3], 'email' : cust[6], 'number' : cust[7], "records" : car}
+        except:
+            context ={'first_name' : cust[0], 'last_name' : cust[1], 'username' : cust[2],
+            'dob' : cust[3], 'email' : cust[6], 'number' : cust[7], "records" : ["NA","NA","NA","NA","NA"]}
 
     return render(request,'app/profile.html', context)
 
@@ -253,15 +264,71 @@ def editpersonalinfo(request):
 
     return render(request,'app/editpersonalinfo.html', context)
 
-def editpersonalcarinfo(request):
+def editpersonalcarinfo(request, car_vin):
     """Shows the editpersonalcarinfo page"""
+    email = request.user.username
+    # fetch the object related to passed id
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM listings WHERE car_vin = %s", [car_vin])
+        car = cursor.fetchone()
+        context ={'car_make' : car[1], 'car_model' : car[2],
+         'year' : car[3] , 'mileage' : car[4], 'rate' : car[5]}
 
-    return render(request,'app/editpersonalcarinfo.html')
+    if request.method == 'POST':
+        car_make = request.POST.get('car_make')
+        car_model = request.POST.get('car_model')
+        year = request.POST.get('year')
+        mileage = request.POST.get('mileage')
+        rate = request.POST.get('rate')
+        context['car_make'] = car_make
+        context['car_model'] = car_model
+        context['year'] = year
+        context['mileage'] = mileage
+        context['rate'] = rate
+	
+        # if first_name == cust[0] and last_name == cust[1] and username == cust[2] and phonenumber == cust[7]:
+        #     messages.error(request, 'New profile is identical to the old one!') 
+        #     return render(request, 'app/change_profile.html', context)
+	
+        with connection.cursor() as cursor:
+            try:
+                cursor.execute("UPDATE listings SET carmake = %s, model = %s, year = %s, mileage = %s, rate = %s WHERE car_vin = %s", 
+                [car_make, car_model, year, mileage, rate, car_vin])
+		
+            except Exception as e:
+                string = str(e)
+                message = string
+		
+                if 'new row for relation "customer" violates check constraint "customer_mobile_number_check"' in string:
+                    message = 'Please enter a valid Singapore number!'
+		
+                elif 'out of range for type integer' in string:
+                    message = 'Please enter a valid Singapore number!'
+
+                elif 'out of range for type integer' in string:
+                    message = 'Please enter a valid Singapore number!'
+
+                elif 'duplicate key value violates unique constraint "customer_username_key"' in string:
+                    message = 'Customer username taken!'
+		
+                messages.error(request, message) 
+                return render(request, 'app/editpersonalcarinfo', context)
+	
+            messages.success(request, 'Profile has been successfully updated!')
+            return redirect('profile')
+
+    return render(request,'app/editpersonalcarinfo.html', context)
+
+# def editpersonalcarinfo(request):
+#     return render(request,'app/editpersonalcarinfo.html')
 
 def editrentalcarinfo(request):
     """Shows the editrentalcarinfo page"""
 
     return render(request,'app/editrentalcarinfo.html')
+
+def admin(request):
+    return render(request, 'app/admin.html')
 
 @login_required(login_url = 'login')
 def addcar(request):
