@@ -39,6 +39,10 @@ urlpatterns = [
     path('addpersonalcarinfoPH', app.views.addpersonalcarinfoPH, name='addpersonalcarinfoPH'),   ######### edit info then need coz diff row diff displayed info in fields
     path('unavailablecarinfoPH', app.views.unavailablecarinfoPH, name='unavailablecarinfoPH'),
     path('unavailablecarinfoPH/edit/<str:car_vin>/<str:unavailable>', app.views.editunavailablecarinfoPH, name='editunavailablecarinfoPH'), ### goes to html file editunavailablecarinfo.html 
+    path('addunavailablecarinfoPH', app.views.addunavailablecarinfoPH, name='addunavailablecarinfoPH'),
+    path('rentalcarinfoPH', app.views.rentalcarinfoPH, name='rentalcarinfoPH'),
+    path('rentalcarinfoPH/edit/<str:car_vin>/<str:pick_up>', app.views.editrentalcarinfoPH, name='editrentalcarinfoPH'),
+    path('addrentalcarinfoPH', app.views.addrentalcarinfoPH, name='addrentalcarinfoPH'),
 
 ]
 

@@ -1,0 +1,25 @@
+
+<html>
+    <body>
+        <h2>Add New Rental Car Info</h2>
+        <a href="/rentalcarinfoPH">Back to Rental Car Info database </a>
+    
+        <p style="color:red">{{ status|safe }}</p>
+        <!-- Create a Form -->
+        <form method="POST">
+            <!-- Security token by Django -->
+            {% csrf_token %}
+            <!-- form -->
+           <!-- <div id="div_id_first_name" class="control-group"> <label for="id_owner" class="control-label requiredField"> -->
+            Owner<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="owner" maxlength="64" class="textinput textInput" required="" id="id_first_name"> </div> </div> <div id="div_id_last_name" class="control-group"> <label for="id_last_name" class="control-label requiredField">
+            Renter<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="renter" maxlength="64" class="textinput textInput" required="" id="id_last_name"> </div> </div> <div id="div_id_email" class="control-group"> <label for="id_email" class="control-label requiredField">
+            Car VIN<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="car_vin" maxlength="64" class="textinput textInput" required="" id="id_email"> </div> </div> <div id="div_id_dob" class="control-group"> <label for="id_dob" class="control-label requiredField">
+            Pick-up date (mm/dd/yyyy)<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="pick_up" maxlength="16" class="dateinput" required="" id="id_dob"> </div> </div> <div id="div_id_since" class="control-group"> <label for="id_since" class="control-label requiredField">
+            Drop-off date (mm/dd/yyyy)<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="drop_off" maxlength="16" class="dateinput" required="" id="id_since"> </div> </div> <div id="div_id_customerid" class="control-group"> <label for="id_customerid" class="control-label requiredField">
+            Rental fee<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="rental_fee" maxlength="16" class="textinput textInput" required="" id="id_customerid"> </div> </div> <div id="div_id_country" class="control-group"> <label for="id_country" class="control-label requiredField">
+        
+            <br>
+            <button type="submit" value="Add">Add</button>
+        </form>
+    </body>
+    </html>

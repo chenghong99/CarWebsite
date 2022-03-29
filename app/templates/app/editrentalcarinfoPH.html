@@ -1,0 +1,42 @@
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+  
+  
+  </body>
+  <html>
+      {% load static %}
+      <link rel ="stylesheet" href="{% static "login.css" %}">
+  <body>
+      <h2>Edit {{obj.2}} on {{obj.3}}</h2>
+      <a href="profile">Back to home</a>
+      <a href="/rentalcarinfoPH">Back to Rental Car Info database </a>
+      <p style="color:red">{{ status|safe }}</p>
+  
+      <!-- Create a Form -->
+      <form method="POST">
+          <!-- Security token by Django -->
+          {% csrf_token %}
+          <!-- form -->
+          <div id="div_id_owner" class="control-group"> <label for="id_owner" class="control-label requiredField">
+          Owner<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="owner" value="{{obj.0}}" maxlength="64" class="textinput textInput" required="" id="id_car_vin"> </div> </div> 
+        <div id="div_id_renter" class="control-group"> <label for="id_renter" class="control-label requiredField">
+          Renter<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="renter" value="{{obj.1}}" maxlength="64" class="textinput textInput" required="" id="id_carmake"> </div> </div> 
+        <div id="div_id_car_vin" class="control-group"> <label for="id_car_vin" class="control-label requiredField">
+          Car VIN<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="car_vin" value="{{obj.2}}" maxlength="64" class="textinput textInput" required="" id="id_model"> </div> </div> 
+        <div id="div_id_pick_up" class="control-group"> <label for="id_pick_up" class="control-label requiredField">
+          Pick-up date (mm/dd/yyyy)<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="pick_up" value="{{obj.3| date:"m/d/Y"}}" class="dateinput" required="" id="id_dob"> </div> </div> 
+        <div id="div_id_drop_off" class="control-group"> <label for="id_drop_off" class="control-label requiredField">
+          Drop-off date (mm/dd/yyyy)<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="drop_off" value="{{obj.4| date:"m/d/Y"}}" class="dateinput" required="" id="id_since"> </div> </div> 
+        <div id="div_id_rental_fee" class="control-group"> <label for="id_rental_fee" class="control-label requiredField">
+          Rental Fee<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="rental_fee" value="{{obj.5}}" maxlength="16" class="textinput textInput" required="" id="id_rate"> </div> </div>
+          <br>
+          <button type="submit" value="Update">Update</button>
+      </form>
+  </body>
+  </html>

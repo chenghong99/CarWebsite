@@ -525,3 +525,110 @@ def editunavailablecarinfoPH(request,car_vin, unavailable):
     context["status"] = status
 
     return render(request,'app/editunavailablecarinfoPH.html',context)
+
+
+def addunavailablecarinfoPH(request): ############################# to change to try and except method like addrentalcarinfo
+    """Shows the addpersonalcarinfo page"""
+    context = {}
+    status = ''
+    
+    if request.POST:
+        ## Check if customerid is already in the table
+        with connection.cursor() as cursor:
+            try:
+                cursor.execute("INSERT INTO unavailable VALUES (%s, %s, %s)"
+                        , [request.POST.get('car_vin'), request.POST.get('owner'), request.POST.get('unavailable')])
+            
+          ##### all these below is for tables with the check constraints to catch the constraint errors  
+            except Exception as e:
+                string = str(e)
+                message = ""
+                if 'duplicate key value violates unique constraint "rentals_pkey"' in string:  
+                    message = 'The email has already been used by another user!' #### maybe "car_vin with unavailablility on this date alr exists!"
+                elif 'new row for relation "rentals" violates check constraint "rentals_pick_up_check"' in string: ###### need go see correct error msg
+                    message = 'Please check that drop_off date is not before pick_up date!'#### maybe "owner and car_vin doesnt exist in listings table!"
+                messages.error(request, message)
+                return render(request, "addunavailablecarinfoPH.html")
+            return redirect('unavailablecarinfoPH') ##### i added this so it routes to unavailablecarinfo.html after 
+
+    context['status'] = status
+
+    return render(request,'app/addunavailablecarinfoPH.html')
+
+def rentalcarinfoPH(request):
+    """Shows the rentalcarinfo page"""
+    
+    ## Delete rental
+    if request.POST:
+        if request.POST['action'] == 'delete':
+            with connection.cursor() as cursor:
+                cursor.execute("DELETE FROM rentals WHERE car_vin = %s AND pick_up = %s", [request.POST['car_vin'],request.POST['pick_up']])
+                
+    ## Use raw query to get all objects
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM rentals ORDER BY pick_up")
+        rentalcarinfo = cursor.fetchall()
+
+    result_dict = {'records': rentalcarinfo}
+    
+    return render(request,'app/rentalcarinfoPH.html',result_dict)
+
+def editrentalcarinfoPH(request,car_vin, pick_up): #<input type="hidden" name="car_vin" value="{{cust.2}}"/>      in rentalcarinfo.html
+                                                     #<input type="hidden" name="unavailable" value="{{cust.3}}"/>
+                                                     
+    """Shows the editrentalcarinfo page"""
+    context ={}
+
+    # fetch the object related to passed car_vin and unavailable
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM rentals WHERE car_vin = %s AND pick_up = %s", [car_vin,datetime.datetime.strptime(pick_up,'%b %d %Y').strftime('%m/%d/%Y')]) 
+        obj = cursor.fetchone()
+
+    status = ''
+    # save the data from the form
+
+    if request.POST:
+        ##TODO: date validation
+        with connection.cursor() as cursor:
+            cursor.execute("UPDATE rentals SET owner = %s, renter = %s, car_vin = %s, pick_up = %s, drop_off = %s, rental_fee = %s WHERE car_vin = %s AND pick_up = %s"
+                    , [request.POST.get('owner'), request.POST.get('renter'), request.POST.get('car_vin'), request.POST.get('pick_up'),request.POST.get('drop_off'),
+                      request.POST.get('rental_fee'), car_vin, pick_up])
+            status = 'Rental edited successfully!'
+            cursor.execute("SELECT * FROM rentals WHERE car_vin = %s AND pick_up = %s", [car_vin,datetime.datetime.strptime(pick_up,'%b %d %Y').strftime('%m/%d/%Y')])
+            obj = cursor.fetchone()
+
+    context["obj"] = obj
+    context["status"] = status
+
+    return render(request,'app/editrentalcarinfoPH.html',context)
+
+def addrentalcarinfoPH(request):
+    """Shows the addrentalcarinfo page"""
+    context = {}
+    status = ''
+
+    if request.POST:
+        ## Check if customerid is already in the table
+        with connection.cursor() as cursor:
+            try:
+                cursor.execute("INSERT INTO rentals VALUES (%s, %s, %s, %s, %s, %s )"
+                        , [request.POST.get('owner'), request.POST.get('renter'), request.POST.get('car_vin'),
+                          request.POST.get('pick_up'), request.POST.get('drop_off'), request.POST.get('rental_fee')])
+            
+          ##### all these below is for tables with the check constraints to catch the constraint errors  
+            except Exception as e:
+                string = str(e)
+                message = ""
+                if 'duplicate key value violates unique constraint "rentals_pkey"' in string:  
+                    message = 'Pick-up date for this Car VIN already exists!' ####################################### to edit
+                elif 'new row for relation "rentals" violates check constraint "rentals_pick_up_check"' in string: ###### need go see correct error msg
+                    message = 'Please check that drop_off date is not before pick_up date!'
+                elif 'new row for relation "rentals" violates check constraint "users_mobile_number_check"' in string:
+                    message = 'Please enter a valid Singapore number!'####################################### to edit
+                messages.error(request, message)
+                return render(request, "addrentalcarinfoPH.html")
+            return redirect('rentalcarinfoPH') ##### i added this so it routes to rentalcarinfo.html after 
+            
+    context['status'] = status
+
+    return render(request,'app/addrentalcarinfoPH.html')
