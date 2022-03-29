@@ -1,17 +1,15 @@
-<a href="profile">Profile page</a>
-
 {% load static %}
 <html>
 <body>
-    <h2> Personal Info database </h2>
-    <img src="{% static 'app/images/Customer.png' %}" width="10%"   alt="Customer logo"/><br/>
-    <a href="addpersonalinfo"><button> Add Personal Info </button></a>   <!--href goes to urls.py and then urls.py goes to views.py  -->
+    <h2> Personal Car Info database </h2>
+    <img src="{% static 'app/images/Listing.png' %}" width="10%"   alt="Listing logo"/><br/>
+    <a href="addpersonalcarinfoPH"><button> Add Personal Car Info </button></a>   <!--href goes to urls.py and then urls.py goes to views.py  -->
                                                                          
     <br>
     <br>
     </div>
 
-    <div class="home">
+    <div class="home">          <!-- allows switching between any table from any table-->
       <button class="personalinfo"><a href="admin"> Personal Info database </a></button>
       <button class="personalcarinfo"><a href="personalcarinfoPH"> Personal Car Info database </a></button>
       <button class="unavailablecarinfo"><a href="unavailablecarinfoPH"> Unavailable Car database </a></button>
@@ -24,14 +22,13 @@
     <br/><br/>
     <table border=1>
         <thead>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-            <th>Date of Birth</th>
-            <th>Password</th>
-            <th>ConfirmPassword</th>                  <!-- honestly i think dont need this-->
-            <th>email</th>
-            <th>Phone Number</th>
+            <th>Car VIN</th>
+            <th>Car Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Mileage</th>
+            <th>Rate</th>
+            <th>Owner</th>
             
         </thead>
         {% for cust in records %}             <!-- records is the key in the dictionary in the last 4 methods in views.py -->
@@ -43,14 +40,14 @@
             <td> {{ cust.4 }} </td>
             <td> {{ cust.5 }} </td>
             <td> {{ cust.6 }} </td>
-            <td> {{ cust.7}} </td>
             <td>
-                <a href="editpersonalinfoPH/{{cust.6}}"><button>Edit Customer</button></a>        <!-- okay pretty sure href goes to urls.py......... -->
+                <a href="personalcarinfoPH/edit/{{cust.6}}/{{cust.0}}"><button>Edit Customer</button></a>        <!-- okay pretty sure href goes to urls.py......... -->
                 | 
                 <form method="POST" style="display: inline;">
                 {% csrf_token %}
-                <input type="hidden" name="email" value="{{cust.6}}"/>  <!-- this name="email" goes to views.py function [email], like name="id" to [id]-->
-                <button onclick="return confirm('Are you sure you want to delete {{cust.6}}?');" type="submit" name="action" value="delete">Delete</button> 
+                <input type="hidden" name="owner" value="{{cust.6}}"/>
+                <input type="hidden" name="car_vin" value="{{cust.0}}"/> 
+                <button onclick="return confirm('Are you sure you want to delete {{cust.6}},{{cust.0}}?');" type="submit" name="action" value="delete">Delete</button> 
               </form></td>
         </tr>
         {% endfor %}

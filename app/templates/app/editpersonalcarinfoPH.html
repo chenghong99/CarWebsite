@@ -1,0 +1,44 @@
+<body>
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+
+
+</body>
+<html>
+    {% load static %}
+    <link rel ="stylesheet" href="{% static "login.css" %}">
+<body>
+    <h2>Edit {{obj.5}}</h2>
+    <a href="profile">Back to home</a>
+    <a href="/personalcarinfoPH">Back to Personal Car Info database </a>
+    <p style="color:red">{{ status|safe }}</p>
+
+    <!-- Create a Form -->
+    <form method="POST">
+        <!-- Security token by Django -->
+        {% csrf_token %}
+        <!-- form -->
+       <div id="div_id_car_vin" class="control-group"> <label for="id_car_vin" class="control-label requiredField">
+        Car VIN<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="car_vin" value="{{obj.0}}" maxlength="64" class="textinput textInput" required="" id="id_car_vin"> </div> </div> 
+      <div id="div_id_last_name" class="control-group"> <label for="id_carmake" class="control-label requiredField">
+        Car Make<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="carmake" value="{{obj.1}}" maxlength="64" class="textinput textInput" required="" id="id_carmake"> </div> </div> 
+      <div id="div_id_model" class="control-group"> <label for="id_model" class="control-label requiredField">
+        Model<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="model" value="{{obj.2}}" maxlength="64" class="textinput textInput" required="" id="id_model"> </div> </div> 
+      <div id="div_id_year" class="control-group"> <label for="id_year" class="control-label requiredField">
+        Year<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="year" value="{{obj.3|slugify}}" class="dateinput" required="" id="id_dob"> </div> </div> 
+      <div id="div_id_mileage" class="control-group"> <label for="id_mileage" class="control-label requiredField">
+        Mileage<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="mileage" value="{{obj.4|slugify}}" class="dateinput" required="" id="id_since"> </div> </div> 
+      <div id="div_id_rate" class="control-group"> <label for="id_rate" class="control-label requiredField">
+        Rate<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="rate" value="{{obj.5}}" maxlength="16" class="textinput textInput" required="" id="id_rate"> </div> </div>
+      <div id="div_id_owner" class="control-group"> <label for="id_owner" class="control-label requiredField">
+        Owner<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="owner" value="{{obj.6}}" maxlength="256" class="textinput textInput" required="" id="id_rate"> </div> </div>
+        <br>
+        <button type="submit" value="Update">Update</button>
+    </form>
+</body>
+</html>

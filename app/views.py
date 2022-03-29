@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm #add this
 from django.contrib.auth import login as auth_login
+import datetime
 
 
 # Create your views here.
@@ -400,3 +401,127 @@ def editpersonalinfoPH(request, email):
             return redirect('admin')    
 
     return render(request,'app/editpersonalinfoPH.html', context)
+
+def personalcarinfoPH(request):
+    """Shows the personalcarinfo page"""
+    
+    ## Delete listing
+    if request.POST:
+        if request.POST['action'] == 'delete':
+            with connection.cursor() as cursor:
+                cursor.execute("DELETE FROM listings WHERE owner = %s AND car_vin = %s", [request.POST['owner'],request.POST['car_vin']]) ## gotta make sure the constraint satisfied...foreign key
+                ## can cursor.execute include multiple queries???? COZ NEED DELETE FROM TABLE BEFORE CAN DELETE FROM MASTERTABLE
+                ## DO I NEED TO MAKE SURE THAT?? COZ SCHEMA GOT ON DELETE CASCADE
+                #################################################################################################################################
+    ## Use raw query to get all objects
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM listings ORDER BY owner")
+        personalcarinfo = cursor.fetchall()
+
+    result_dict = {'records': personalcarinfo}
+    
+    return render(request,'app/personalcarinfoPH.html',result_dict) 
+
+
+def editpersonalcarinfoPH(request,owner,car_vin):
+    """Shows the editpersonalcarinfo page"""
+    context ={}
+
+    # fetch the object related to passed id
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM listings WHERE owner = %s AND car_vin = %s", [owner,car_vin])
+        obj = cursor.fetchone()
+
+    status = ''
+    # save the data from the form
+
+    if request.POST:
+        ##TODO: date validation
+        with connection.cursor() as cursor:
+            cursor.execute("UPDATE listings SET car_vin = %s, carmake = %s, model = %s, year = %s, mileage = %s, rate = %s, owner = %s WHERE owner = %s AND car_vin = %s"
+                    , [request.POST.get('car_vin'), request.POST.get('carmake'), request.POST.get('model'),
+                        request.POST.get('year') , request.POST.get('mileage'), request.POST.get('rate'), request.POST.get('owner'), owner,car_vin])
+            status = 'Listing edited successfully!'
+            cursor.execute("SELECT * FROM listings WHERE owner = %s AND car_vin = %s", [owner,car_vin])
+            obj = cursor.fetchone()
+
+    context["obj"] = obj
+    context["status"] = status
+
+    return render(request,'app/editpersonalcarinfoPH.html',context)
+
+def addpersonalcarinfoPH(request):
+    """Shows the addpersonalcarinfo page"""
+    context = {}
+    status = ''
+    
+    if request.POST:
+        ## Check if customerid is already in the table
+        with connection.cursor() as cursor:
+            try:
+                cursor.execute("INSERT INTO listings VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                        , [request.POST.get('car_vin'), request.POST.get('carmake'), request.POST.get('model'),
+                          request.POST.get('year'), request.POST.get('mileage'), request.POST.get('rate'), request.POST.get('owner')])
+            
+          ##### all these below is for tables with the check constraints to catch the constraint errors  
+            except Exception as e:
+                string = str(e)
+                message = ""
+                if 'duplicate key value violates unique constraint "rentals_pkey"' in string:  
+                    message = 'The email has already been used by another user!' ## maybe please input the correct year! or correct number for mileage!
+                elif 'new row for relation "rentals" violates check constraint "rentals_pick_up_check"' in string: ###### need go see correct error msg
+                    message = 'Please check that drop_off date is not before pick_up date!'
+                elif 'new row for relation "rentals" violates check constraint "users_mobile_number_check"' in string:
+                    message = 'Please enter a valid Singapore number!'####################################### to edit
+                messages.error(request, message)
+                return render(request, "addpersonalcarinfoPH.html")
+            return redirect('personalcarinfoPH') ##### i added this so it routes to personalcarinfo.html after
+
+    context['status'] = status
+
+    return render(request,'app/addpersonalcarinfoPH.html')
+
+
+def unavailablecarinfoPH(request):
+    """Shows the unavailablecarinfo page"""
+    
+    ## Delete unavailable
+    if request.POST:
+        if request.POST['action'] == 'delete':
+            with connection.cursor() as cursor:
+                cursor.execute("DELETE FROM unavailable WHERE car_vin = %s AND unavailable = %s", [request.POST['car_vin'],request.POST['unavailable']])
+                
+    ## Use raw query to get all objects
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM unavailable ORDER BY unavailable")
+        unavailablecarinfo = cursor.fetchall()
+
+    result_dict = {'records': unavailablecarinfo}
+    
+    return render(request,'app/unavailablecarinfoPH.html',result_dict)
+
+def editunavailablecarinfoPH(request,car_vin, unavailable):
+    """Shows the editpersonalcarinfo page"""
+    context ={}
+
+    # fetch the object related to passed id
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM unavailable WHERE car_vin = %s AND unavailable = %s", [car_vin,datetime.datetime.strptime(unavailable,'%b %d %Y').strftime('%m/%d/%Y')])
+        obj = cursor.fetchone()
+
+    status = ''
+    # save the data from the form
+
+    if request.POST:
+        ##TODO: date validation
+        with connection.cursor() as cursor:
+            cursor.execute("UPDATE unavailable SET car_vin = %s, owner = %s, unavailable = %s WHERE car_vin = %s AND unavailable = %s"
+                    , [request.POST.get('car_vin'), request.POST.get('owner'), request.POST.get('unavailable'),car_vin, unavailable])
+            status = 'Unavailable edited successfully!'
+            cursor.execute("SELECT * FROM unavailable WHERE car_vin = %s AND unavailable = %s", [car_vin,datetime.datetime.strptime(unavailable,'%b %d %Y').strftime('%m/%d/%Y')])
+            obj = cursor.fetchone()
+
+    context["obj"] = obj
+    context["status"] = status
+
+    return render(request,'app/editunavailablecarinfoPH.html',context)

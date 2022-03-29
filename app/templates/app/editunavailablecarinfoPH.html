@@ -1,0 +1,39 @@
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+  
+  
+  </body>
+  
+  <html>
+      {% load static %}
+      <link rel ="stylesheet" href="{% static "login.css" %}">
+  <body>
+      <h2>Edit {{obj.1}}</h2>
+      <a href="profile">Back to home</a>
+      <a href="/unavailablecarinfoPH">Back to Unavailable Car Info database </a>
+      <p style="color:red">{{ status|safe }}</p>
+  
+      <!-- Create a Form -->
+     <form method="POST">
+          <!-- Security token by Django -->
+          {% csrf_token %}
+          <!-- form -->
+          <div id="div_id_car_vin" class="control-group"> <label for="id_car_vin" class="control-label requiredField">
+          Car VIN<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="car_vin" value="{{obj.0}}" maxlength="64" class="textinput textInput" required="" id="id_car_vin"> </div> </div> 
+        <div id="div_id_owner" class="control-group"> <label for="id_owner" class="control-label requiredField">
+          Owner<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="owner" value="{{obj.1}}" maxlength="64" class="textinput textInput" required="" id="id_carmake"> </div> </div> 
+        <div id="div_id_unavailable_date" class="control-group"> <label for="id_unavailable_date" class="control-label requiredField">
+          Unavailable date (mm/dd/yyyy)<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="unavailable" value="{{obj.2 |date:"m/d/Y"}}" maxlength="64" class="dateinput" required="" id="id_model"> </div> </div> 
+        <div id="div_id_year" class="control-group"> <label for="id_year" class="control-label requiredField">
+     
+          <br>
+          <button type="submit" value="Update">Update</button>
+      </form>
+  </body>
+  </html>
