@@ -1,1 +1,60 @@
 <a href="profile">Profile page</a>
+
+{% load static %}
+<html>
+<body>
+    <h2> Personal Info database </h2>
+    <img src="{% static 'app/images/Customer.png' %}" width="10%"   alt="Customer logo"/><br/>
+    <a href="addpersonalinfo"><button> Add Personal Info </button></a>   <!--href goes to urls.py and then urls.py goes to views.py  -->
+                                                                         
+    <br>
+    <br>
+    </div>
+
+    <div class="home">
+      <button class="personalinfo"><a href="personalinfo"> Personal Info database </a></button>
+      <button class="personalcarinfo"><a href="personalcarinfo"> Personal Car Info database </a></button>
+      <button class="unavailablecarinfo"><a href="unavailablecarinfo"> Unavailable Car database </a></button>
+      <button class="rentalcarinfo"><a href="rentalcarinfo"> Rental Car database </a></button>
+    </div>
+    </div>
+    <br/><br/>
+    <br>
+    <br>
+    <br/><br/>
+    <table border=1>
+        <thead>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>Date of Birth</th>
+            <th>Password</th>
+            <th>ConfirmPassword</th>                  <!-- honestly i think dont need this-->
+            <th>email</th>
+            <th>Phone Number</th>
+            
+        </thead>
+        {% for cust in records %}             <!-- records is the key in the dictionary in the last 4 methods in views.py -->
+        <tr>
+            <td> {{ cust.0 }} </td>
+            <td> {{ cust.1 }} </td>
+            <td> {{ cust.2 }} </td>
+            <td> {{ cust.3 }} </td>
+            <td> {{ cust.4 }} </td>
+            <td> {{ cust.5 }} </td>
+            <td> {{ cust.6 }} </td>
+            <td> {{ cust.7}} </td>
+            <td>
+                <a href="editpersonalinfoPH/{{cust.6}}"><button>Edit Customer</button></a>        <!-- okay pretty sure href goes to urls.py......... -->
+                | 
+                <form method="POST" style="display: inline;">
+                {% csrf_token %}
+                <input type="hidden" name="email" value="{{cust.6}}"/>  <!-- this name="email" goes to views.py function [email], like name="id" to [id]-->
+                <button onclick="return confirm('Are you sure you want to delete {{cust.6}}?');" type="submit" name="action" value="delete">Delete</button> 
+              </form></td>
+        </tr>
+        {% endfor %}
+    </table>
+     
+</body>
+</html>

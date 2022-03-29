@@ -26,14 +26,13 @@ urlpatterns = [
     path('signup', app.views.signup, name='signup'),
     path('admin', app.views.admin, name='admin'),
     path('logout/', app.views.logout_page, name = "logout"),
-    path('add', app.views.add, name='add'),
     path('login', app.views.login, name='login'),
     path('addcar', app.views.addcar, name='addcar'),
     path('editpersonalinfo', app.views.editpersonalinfo, name='editpersonalinfo'),
+    path('editpersonalinfoPH/<str:email>', app.views.editpersonalinfoPH, name='editpersonalinfoPH'),
     path('editpersonalcarinfo/<str:car_vin>', app.views.editpersonalcarinfo, name='editpersonalcarinfo'),
     path('editrentalcarinfo', app.views.editrentalcarinfo, name='editrentalcarinfo'),
     path('profile', app.views.profile, name='profile'),
-    path('view/<str:id>', app.views.view, name='view'),
-    path('edit/<str:id>', app.views.edit, name='edit'),
+    path('addpersonalinfo', app.views.addpersonalinfo, name='addpersonalinfo'), 
 ]
 
