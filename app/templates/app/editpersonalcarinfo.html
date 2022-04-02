@@ -1,10 +1,12 @@
-{% if messages %}
+<body>
+    {% if messages %}
     <ul class="messages">
         {% for message in messages %}
         <li>{{ message }}</li>
         {% endfor %}
     </ul>
-{% endif %}
+    {% endif %}
+  </body>
 
 {% block content %}
 {% load static %}
