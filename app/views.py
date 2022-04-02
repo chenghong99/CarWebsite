@@ -627,11 +627,13 @@ def editrentalcarinfoPH(request,car_vin, pick_up): #<input type="hidden" name="c
                     message = 'Error! This owner does not exist!'
                 if 'insert or update on table "rentals" violates foreign key constraint "rentals_renter_fkey"' in string:  
                     message = 'Error! This renter does not exist!'
-                if 'insert or update on table "rentals"???ter_fkey"' in string:  
-                    message = 'Error! This renter does not exist!'
+                if 'value too long for type character varying(17)' in string:  
+                    message = 'Error! Please check the Car VIN again!'
+                if 'new row for relation "rentals" violates check constraint "chk_date"' in string:  
+                    message = 'Error! How can you drop off the car before you even pick it up?!'
                 messages.error(request, message)
                 return render(request, "app/editrentalcarinfoPH.html")
-            return redirect('unavailablecarinfoPH')
+            return redirect('editrentalcarinfoPH')
         status = 'Unavailable edited successfully!'
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM rentals WHERE car_vin = %s AND pick_up = %s", [car_vin,datetime.datetime.strptime(pick_up,'%b %d %Y').strftime('%m/%d/%Y')])
