@@ -475,7 +475,7 @@ def addpersonalcarinfoPH(request):
           ##### all these below is for tables with the check constraints to catch the constraint errors  
             except Exception as e:
                 string = str(e)
-                message = ""
+                message = string
                 if 'duplicate key value violates unique constraint "listings_pkey"' in string:  
                     message = 'The owner has already registered this car!' 
                 elif 'new row for relation "listings" violates check constraint "listings_year_check"' in string: 
