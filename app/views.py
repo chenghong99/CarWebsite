@@ -485,9 +485,10 @@ def addpersonalcarinfoPH(request):
                 elif 'new row for relation "listings" violates check constraint "listings_rate_check"' in string:
                         message = 'Please check that the rate is correct!'
                 messages.error(request, message)
-                return render(request, "addpersonalcarinfoPH.html")
+                return render(request, "app/addpersonalcarinfoPH.html")
+	    messages.success(request, 'Car succesfully listed')
             return redirect('personalcarinfoPH') ##### i added this so it routes to personalcarinfo.html after
-
+          
     context['status'] = status
 
     return render(request,'app/addpersonalcarinfoPH.html')
