@@ -446,12 +446,12 @@ def editpersonalcarinfoPH(request,owner,car_vin):
 
     if request.POST:
         ##TODO: date validation
-        try:
-            with connection.cursor() as cursor:
+        with connection.cursor() as cursor:
+            try:
                 cursor.execute("UPDATE listings SET car_vin = %s, carmake = %s, model = %s, year = %s, mileage = %s, rate = %s, owner = %s WHERE owner = %s AND car_vin = %s"
                         , [request.POST.get('car_vin'), request.POST.get('carmake'), request.POST.get('model'),
                             request.POST.get('year') , request.POST.get('mileage'), request.POST.get('rate'), request.POST.get('owner'), owner,car_vin])
-        except Exception as e:
+            except Exception as e:
                 string = str(e)
                 message = string
                 if 'update or delete on table "listings" violates foreign key constraint "unavailable_owner_car_vin_fkey" on table "unavailable"' in string:  
