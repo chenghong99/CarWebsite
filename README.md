@@ -18,19 +18,23 @@ Administrators can also create, modify and delete all entries.
 
 
 Our website will have 4 main screens/features namely the login/sign-up, profile page, home page, admin page:
+
 login/signup
 Users will be able to create an account and log in. There will be 2 fields for the login page (username textbox, password textbox)
 At the sign up page there will be 6 fields all in textbox (email, DOB, address (for pick up), username, password and confirm password) 
 There will also be constraints here that ensures everything is not null and the email and username are unique
 We can also ensure registered users are above the age of 18 by adding a check constraint.
+
 Profile page
 At the profile page users can list their cars for others to rent and also modify their listings
 Car listings include the following features: Car make, model, year, mileage, availability
 Users will also be able to see the details of their current rentals at the profile page (including total rental fee, pick-up and drop-off date, car VIN)
 Users can also see their details and modify their details in the profile page.
+
 Home page
 At the home page users get to search for cars they would like to rent on certain days. (The results shown are only those listed as available in the database)
 After finding their desired car the users can book the car. (Upon booking the car it will be listed as unavailable on the selected date/s in the database)
+
 Administrator page
 Access to all user details, car listings , current car rentals, rental due date. (In the form of a table)
 Administrators can also create, modify and delete all entries.
