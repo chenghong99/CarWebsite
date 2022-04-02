@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS listings (
   car_vin VARCHAR(17) NOT NULL,
   carmake VARCHAR(64) NOT NULL,
   model VARCHAR(64) NOT NULL,
-  year INT NOT NUll CHECK (year>0),
+  year INT NOT NUll CHECK (year BETWEEN 0 AND 9999),
   mileage NUMERIC NOT NULL CHECK (mileage >0),
   rate NUMERIC NOT NULL CHECK (rate>0),
   owner VARCHAR(256) REFERENCES customer(email) ON DELETE CASCADE,
