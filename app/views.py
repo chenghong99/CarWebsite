@@ -631,7 +631,7 @@ def addrentalcarinfoPH(request):
                 if 'duplicate key value violates unique constraint "rentals_pkey"' in string:  
                     message = 'This car has already been booked on this date(s)!' 
                 elif 'new row for relation "rentals" violates check constraint "chk_date"' in string: ###### need go see correct error msg
-                    message = 'You can only drop off the car on the same day of pick up or later!'
+                    message = 'How can you drop off the car before you pick it up?!'
                 messages.error(request, message)
                 return render(request, "app/addrentalcarinfoPH.html")
             return redirect('rentalcarinfoPH') ##### i added this so it routes to rentalcarinfo.html after 
