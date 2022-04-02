@@ -579,9 +579,7 @@ def addunavailablecarinfoPH(request): ############################# to change to
                 messages.error(request, message)
                 return render(request, "app/addunavailablecarinfoPH.html")
             return redirect('unavailablecarinfoPH') ##### i added this so it routes to unavailablecarinfo.html after 
-
     context['status'] = status
-
     return render(request,'app/addunavailablecarinfoPH.html')
 
 def rentalcarinfoPH(request):
