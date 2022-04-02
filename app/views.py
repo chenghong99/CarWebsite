@@ -543,7 +543,7 @@ def editunavailablecarinfoPH(request,car_vin, unavailable):
                 string = str(e)
                 message = string
                 if 'update or delete on table "unavailable" violates foreign key constraint "unavailable_owner_car_vin_fkey" on table "unavailable"' in string:  
-                    message = 'There is data linked to this email in unavailable table!' 
+                    message = 'Error! There is data in the unavailable table linked to the previous email!' 
                 messages.error(request, message)
                 return render(request, "app/editunavailablecarinfoPH.html")
             return redirect('unavailablecarinfoPH')
