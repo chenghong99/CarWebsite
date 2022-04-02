@@ -476,14 +476,14 @@ def addpersonalcarinfoPH(request):
             except Exception as e:
                 string = str(e)
                 message = string
-                if 'duplicate key value violates unique constraint "listings_pkey"' in string:  
-                    message = 'The owner has already registered this car!' 
-                elif 'new row for relation "listings" violates check constraint "listings_year_check"' in string: 
-                    message = 'Please check that the year is correct!'
+                if 'duplicate key value violates unique constraint "listings_pkey"' in string:
+			message = 'The owner has already registered this car!' 
+                elif 'new row for relation "listings" violates check constraint "listings_year_check"' in string:
+			message = 'Please check that the year is correct!'
                 elif 'new row for relation "listings" violates check constraint "listings_mileage_check"' in string:
-                    message = 'Please check that the mileage is correct!'
+			message = 'Please check that the mileage is correct!'
 		elif 'new row for relation "listings" violates check constraint "listings_rate_check"' in string:
-                    message = 'Please check that the rate is correct!'
+			message = 'Please check that the rate is correct!'
                 messages.error(request, message)
                 return render(request, "addpersonalcarinfoPH.html")
             return redirect('personalcarinfoPH') ##### i added this so it routes to personalcarinfo.html after
