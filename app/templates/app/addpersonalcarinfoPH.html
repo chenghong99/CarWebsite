@@ -1,3 +1,12 @@
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
 <html>
 <body>
     <h2>Add New Personal Car Info below</h2>
