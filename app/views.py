@@ -118,14 +118,23 @@ def profile(request):
         cursor.execute("SELECT * FROM customer WHERE email = %s", [email])
         cust = cursor.fetchone()
     with connection.cursor() as cursor:
+        cursor.execute("SELECT l.car_vin, l.carmake, l.model, r.pick_up, r.drop_off, r.rental_fee FROM listings l, rentals r WHERE r.owner = l.owner AND r.car_vin = l.car_vin AND r.owner = %s", [email])
+        rentalinfo = cursor.fetchall()
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT l.car_vin, l.carmake, l.model, r.pick_up, r.drop_off, r.rental_fee FROM listings l, rentals r WHERE r.owner = l.owner AND r.car_vin = l.car_vin AND r.renter = %s", [email])
+        myrental = cursor.fetchall()
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT COUNT(*) FROM listings WHERE owner = %s", [email])
+        carsowned = cursor.fetchone()
+    with connection.cursor() as cursor:
         try:
             cursor.execute("SELECT * FROM listings WHERE owner = %s", [email])
             car = cursor.fetchall()
             context ={'first_name' : cust[0], 'last_name' : cust[1], 'username' : cust[2],
-            'dob' : cust[3], 'email' : cust[6], 'number' : cust[7], "records" : car}
+            'dob' : cust[3], 'email' : cust[6], 'number' : cust[7], "records" : car, "rentalinfo" : rentalinfo, "myrental" : myrental, "carsowned" : carsowned}
         except:
             context ={'first_name' : cust[0], 'last_name' : cust[1], 'username' : cust[2],
-            'dob' : cust[3], 'email' : cust[6], 'number' : cust[7], "records" : ["NA","NA","NA","NA","NA"]}
+            'dob' : cust[3], 'email' : cust[6], 'number' : cust[7], "records" : ["NA","NA","NA","NA","NA"], "rentalinfo" : []}
 
     return render(request,'app/profile.html', context)
 

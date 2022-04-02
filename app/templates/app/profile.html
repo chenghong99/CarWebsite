@@ -13,8 +13,11 @@
         <label>Email Address: {{email}}</label><br>
         <label>Date of Birth: {{dob}}</label><br>
         <label>Phone Number: {{number}}</label><br>
+        <label>Number of cars owned: {{carsowned}}</label><br>
     </div>
+    <br/><br/>
     <a href = "{% url 'editpersonalinfo' %}">Edit profile</a>
+    <br/><br/>
     <a href = "{% url 'addcar' %}">Add Car</a>
     <div>
         <h1>Car Information</h1>
@@ -40,6 +43,54 @@
             <td>
                 <a href="editpersonalcarinfo/{{car.0}}"><button>Edit</button></a>
             </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div>
+        <h1>Rental Information</h1>
+    </div>
+    <table border=1>
+        <thead>
+            <th>Car VIN</th>
+            <th>Car Make</th>
+            <th>Car Model</th>
+            <th>Pick Up Date</th>
+            <th>Return date</th>
+            <th>Rate</th>
+        </thead>
+        {% for car in rentalinfo %}
+        <tr>
+            <td> {{ car.0 }} </td>
+            <td> {{ car.1 }} </td>
+            <td> {{ car.2 }} </td>
+            <td> {{ car.3 }} </td>
+            <td> {{ car.4 }} </td>
+            <td> {{ car.5 }} </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div>
+        <h1>My Rentals</h1>
+    </div>
+    <table border=1>
+        <thead>
+            <th>Car VIN</th>
+            <th>Car Make</th>
+            <th>Car Model</th>
+            <th>Pick Up Date</th>
+            <th>Return date</th>
+            <th>Rate</th>
+        </thead>
+        {% for car in myrental %}
+        <tr>
+            <td> {{ car.0 }} </td>
+            <td> {{ car.1 }} </td>
+            <td> {{ car.2 }} </td>
+            <td> {{ car.3 }} </td>
+            <td> {{ car.4 }} </td>
+            <td> {{ car.5 }} </td>
         </tr>
         {% endfor %}
     </table>
