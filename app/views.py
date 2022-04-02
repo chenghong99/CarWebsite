@@ -446,13 +446,22 @@ def editpersonalcarinfoPH(request,owner,car_vin):
 
     if request.POST:
         ##TODO: date validation
-        with connection.cursor() as cursor:
-            cursor.execute("UPDATE listings SET car_vin = %s, carmake = %s, model = %s, year = %s, mileage = %s, rate = %s, owner = %s WHERE owner = %s AND car_vin = %s"
-                    , [request.POST.get('car_vin'), request.POST.get('carmake'), request.POST.get('model'),
-                        request.POST.get('year') , request.POST.get('mileage'), request.POST.get('rate'), request.POST.get('owner'), owner,car_vin])
-            status = 'Listing edited successfully!'
-            cursor.execute("SELECT * FROM listings WHERE owner = %s AND car_vin = %s", [owner,car_vin])
-            obj = cursor.fetchone()
+	try:
+            with connection.cursor() as cursor:
+                cursor.execute("UPDATE listings SET car_vin = %s, carmake = %s, model = %s, year = %s, mileage = %s, rate = %s, owner = %s WHERE owner = %s AND car_vin = %s"
+                        , [request.POST.get('car_vin'), request.POST.get('carmake'), request.POST.get('model'),
+                            request.POST.get('year') , request.POST.get('mileage'), request.POST.get('rate'), request.POST.get('owner'), owner,car_vin])
+        except Exception as e:
+                string = str(e)
+                message = string
+                if 'update or delete on table "listings" violates foreign key constraint "unavailable_owner_car_vin_fkey" on table "unavailable"' in string:  
+                    message = 'There is data linked to this email in unavailable table!' 
+                messages.error(request, message)
+                return render(request, "app/addunavailablecarinfoPH.html")
+            return redirect('unavailablecarinfoPH') ##### i added this so it routes to unavailablecarinfo.html after 
+    status = 'Listing edited successfully!'
+    cursor.execute("SELECT * FROM listings WHERE owner = %s AND car_vin = %s", [owner,car_vin])
+    obj = cursor.fetchone()
 
     context["obj"] = obj
     context["status"] = status
