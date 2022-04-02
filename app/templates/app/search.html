@@ -1,0 +1,27 @@
+{% block content %}
+{% load static %}
+  <body> 
+    <div>
+      <form method = "POST">
+        {% csrf_token %}
+        <div id = "pick_up" class = "control-group">
+            <label for="pick_up"><b>From</b><span class="asteriskField">*</span></label>
+                <input type="date" placeholder="Enter Pick-Up Date" name="pick_up" required="" control-id="ControlID-1"><br><br>
+        </div>
+        <div id = "drop_off" class = "control-group">
+            <label for="drop_off"><b>To</b><span class="asteriskField">*</span></label>
+                <input type="date" placeholder="Enter Drop-Off Date" name="drop_off" required="" control-id="ControlID-2"><br><br>
+
+        </div>
+
+
+        <button type="submit" >Search</button>
+        <a href = "{% url 'search' %}">Clear Filter</a>
+
+      </form>
+    </div>
+
+
+    
+</body>
+{% endblock %}
