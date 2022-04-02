@@ -536,9 +536,19 @@ def editunavailablecarinfoPH(request,car_vin, unavailable):
     if request.POST:
         ##TODO: date validation
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE unavailable SET car_vin = %s, owner = %s, unavailable = %s WHERE car_vin = %s AND unavailable = %s"
-                    , [request.POST.get('car_vin'), request.POST.get('owner'), request.POST.get('unavailable'),car_vin, unavailable])
-            status = 'Unavailable edited successfully!'
+            try:
+                cursor.execute("UPDATE unavailable SET car_vin = %s, owner = %s, unavailable = %s WHERE car_vin = %s AND unavailable = %s"
+                        , [request.POST.get('car_vin'), request.POST.get('owner'), request.POST.get('unavailable'),car_vin, unavailable])
+            except Exception as e:
+                string = str(e)
+                message = string
+                  if 'update or delete on table "unavailable" violates foreign key constraint "unavailable_owner_car_vin_fkey" on table "unavailable"' in string:  
+                    message = 'There is data linked to this email in unavailable table!' 
+                messages.error(request, message)
+                return render(request, "app/editunavailablecarinfoPH.html")
+            return redirect('unavailablecarinfoPH')
+        status = 'Unavailable edited successfully!'
+        with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM unavailable WHERE car_vin = %s AND unavailable = %s", [car_vin,datetime.datetime.strptime(unavailable,'%b %d %Y').strftime('%m/%d/%Y')])
             obj = cursor.fetchone()
 
