@@ -616,10 +616,24 @@ def editrentalcarinfoPH(request,car_vin, pick_up): #<input type="hidden" name="c
     if request.POST:
         ##TODO: date validation
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE rentals SET owner = %s, renter = %s, car_vin = %s, pick_up = %s, drop_off = %s, rental_fee = %s WHERE car_vin = %s AND pick_up = %s"
-                    , [request.POST.get('owner'), request.POST.get('renter'), request.POST.get('car_vin'), request.POST.get('pick_up'),request.POST.get('drop_off'),
-                      request.POST.get('rental_fee'), car_vin, pick_up])
-            status = 'Rental edited successfully!'
+            try:
+                cursor.execute("UPDATE rentals SET owner = %s, renter = %s, car_vin = %s, pick_up = %s, drop_off = %s, rental_fee = %s WHERE car_vin = %s AND pick_up = %s"
+                        , [request.POST.get('owner'), request.POST.get('renter'), request.POST.get('car_vin'), request.POST.get('pick_up'),request.POST.get('drop_off'),
+                          request.POST.get('rental_fee'), car_vin, pick_up])
+            except Exception as e:
+                string = str(e)
+                message = string
+                if 'insert or update on table "rentals" violates foreign key constraint "rentals_owner_fkey"' in string:  
+                    message = 'Error! This owner does not exist!'
+                if 'insert or update on table "rentals" violates foreign key constraint "rentals_renter_fkey"' in string:  
+                    message = 'Error! This renter does not exist!'
+                if 'insert or update on table "rentals"???ter_fkey"' in string:  
+                    message = 'Error! This renter does not exist!'
+                messages.error(request, message)
+                return render(request, "app/editrentalcarinfoPH.html")
+            return redirect('unavailablecarinfoPH')
+        status = 'Unavailable edited successfully!'
+        with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM rentals WHERE car_vin = %s AND pick_up = %s", [car_vin,datetime.datetime.strptime(pick_up,'%b %d %Y').strftime('%m/%d/%Y')])
             obj = cursor.fetchone()
 
