@@ -460,8 +460,9 @@ def editpersonalcarinfoPH(request,owner,car_vin):
                 return render(request, "app/addunavailablecarinfoPH.html")
             return redirect('unavailablecarinfoPH') ##### i added this so it routes to unavailablecarinfo.html after 
     status = 'Listing edited successfully!'
-    cursor.execute("SELECT * FROM listings WHERE owner = %s AND car_vin = %s", [owner,car_vin])
-    obj = cursor.fetchone()
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM listings WHERE owner = %s AND car_vin = %s", [owner,car_vin])
+        obj = cursor.fetchone()
 
     context["obj"] = obj
     context["status"] = status
