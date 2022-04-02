@@ -457,8 +457,8 @@ def editpersonalcarinfoPH(request,owner,car_vin):
                 if 'update or delete on table "listings" violates foreign key constraint "unavailable_owner_car_vin_fkey" on table "unavailable"' in string:  
                     message = 'There is data linked to this email in unavailable table!' 
                 messages.error(request, message)
-                return render(request, "app/addunavailablecarinfoPH.html")
-            return redirect('unavailablecarinfoPH') ##### i added this so it routes to unavailablecarinfo.html after 
+                return render(request, "app/editpersonalcarinfoPH.html")
+            return redirect('editpersonalcarinfoPH') ##### i added this so it routes to unavailablecarinfo.html after 
     status = 'Listing edited successfully!'
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM listings WHERE owner = %s AND car_vin = %s", [owner,car_vin])
