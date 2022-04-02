@@ -542,7 +542,7 @@ def editunavailablecarinfoPH(request,car_vin, unavailable):
             except Exception as e:
                 string = str(e)
                 message = string
-                  if 'update or delete on table "unavailable" violates foreign key constraint "unavailable_owner_car_vin_fkey" on table "unavailable"' in string:  
+                if 'update or delete on table "unavailable" violates foreign key constraint "unavailable_owner_car_vin_fkey" on table "unavailable"' in string:  
                     message = 'There is data linked to this email in unavailable table!' 
                 messages.error(request, message)
                 return render(request, "app/editunavailablecarinfoPH.html")
