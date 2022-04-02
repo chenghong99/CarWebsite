@@ -1,0 +1,32 @@
+{% block content %}
+{% load static %}
+  <body>
+      <a href = "{% url 'search' %}">Back to Search</a>
+    <div>
+        <table border = 1>
+            <thead>
+                <th>carmake</th>
+                <th>model</th>
+                <th>year</th>
+                <th>mileage </th>
+                <th>rate</th>
+                <th>owner</th>
+        </thead>
+        {% for listing in listings %}    
+        <tr>
+            <td>{{listing.1}}</td>
+            <td>{{listing.2}}</td>
+            <td>{{listing.3}}</td>
+            <td>{{listing.4}}</td>
+            <td>{{listing.5}}</td>
+            <td>{{listing.6}}</td>
+            <td> <a href = "https://car-share-app1.herokuapp.com/book/{{listing.0}}/{{pick_up}}/{{drop_off}}">Book</a></td>
+        </tr>
+        {% endfor %}
+        </table> 
+    </div>
+    {% endblock %}
+
+
+
+</body>
