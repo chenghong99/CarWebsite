@@ -553,13 +553,13 @@ def addunavailablecarinfoPH(request): ############################# to change to
           ##### all these below is for tables with the check constraints to catch the constraint errors  
             except Exception as e:
                 string = str(e)
-                message = ""
+                message = string
                 if 'duplicate key value violates unique constraint "unavailable_pkey"' in string:  
                     message = 'This unavailability period has already been recorded!' 
                 elif 'new row for relation "unavailable" violates check constraint "unavailable_date_check"' in string: ###### need go see correct error msg
                     message = 'Please check that drop_off date is not before pick_up date!'#### maybe "owner and car_vin doesnt exist in listings table!"
                 messages.error(request, message)
-                return render(request, "ap/addunavailablecarinfoPH.html")
+                return render(request, "app/addunavailablecarinfoPH.html")
             return redirect('unavailablecarinfoPH') ##### i added this so it routes to unavailablecarinfo.html after 
 
     context['status'] = status
