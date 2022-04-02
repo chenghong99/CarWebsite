@@ -556,8 +556,6 @@ def addunavailablecarinfoPH(request): ############################# to change to
                 message = string
                 if 'duplicate key value violates unique constraint "unavailable_pkey"' in string:  
                     message = 'This unavailability period has already been recorded!' 
-                elif 'new row for relation "unavailable" violates check constraint "unavailable_date_check"' in string: ###### need go see correct error msg
-                    message = 'Please check that drop_off date is not before pick_up date!'#### maybe "owner and car_vin doesnt exist in listings table!"
                 messages.error(request, message)
                 return render(request, "app/addunavailablecarinfoPH.html")
             return redirect('unavailablecarinfoPH') ##### i added this so it routes to unavailablecarinfo.html after 
@@ -631,11 +629,9 @@ def addrentalcarinfoPH(request):
                 string = str(e)
                 message = string
                 if 'duplicate key value violates unique constraint "rentals_pkey"' in string:  
-                    message = 'This car has already beedn booked on this date(s)!' 
-                elif 'new row for relation "rentals" violates check constraint "rentals_pick_up_check"' in string: ###### need go see correct error msg
-                    message = 'Please check that drop_off date is not before pick_up date!'
-                elif 'new row for relation "rentals" violates check constraint "users_mobile_number_check"' in string:
-                    message = 'Please enter a valid Singapore number!'####################################### to edit
+                    message = 'This car has already been booked on this date(s)!' 
+                elif 'new row for relation "rentals" violates check constraint "chk_date"' in string: ###### need go see correct error msg
+                    message = 'You can only drop off the car on the same day of pick up or later!'
                 messages.error(request, message)
                 return render(request, "app/addrentalcarinfoPH.html")
             return redirect('rentalcarinfoPH') ##### i added this so it routes to rentalcarinfo.html after 
