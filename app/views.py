@@ -592,7 +592,7 @@ def rentalcarinfoPH(request):
                 
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM rentals ORDER BY pick_up")
+        cursor.execute("SELECT * FROM rentals WHERE pick_up < 2029-09-17 ORDER BY pick_up")
         rentalcarinfo = cursor.fetchall()
 
     result_dict = {'records': rentalcarinfo}
