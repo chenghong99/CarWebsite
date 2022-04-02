@@ -1,4 +1,12 @@
-
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
 <html>
     <body>
         <h2>Add New Rental Car Info</h2>
