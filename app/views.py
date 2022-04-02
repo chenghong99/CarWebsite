@@ -641,3 +641,65 @@ def addrentalcarinfoPH(request):
     context['status'] = status
 
     return render(request,'app/addrentalcarinfoPH.html')
+
+#Hannah
+def search(request):
+    with connection.cursor() as cursor:
+        result_dict = {}
+        result_dict['pick_up'] = ''
+        result_dict['drop_off'] = ''
+        if request.method == "POST":
+            pick_up = request.POST.get("pick_up")
+            drop_off = request.POST.get("drop_off")
+            ##ADD MORE FILTERS: must include in redirect args & search_results as *args
+            return redirect(search_results,pick_up,drop_off)
+    return render(request,'app/search.html')
+
+
+#Hannah
+def search_results(request,pick_up,drop_off):
+    with connection.cursor() as cursor:
+        result_dict = {}
+        result_dict['pick_up'] = pick_up
+        result_dict['drop_off'] = drop_off
+        cursor.execute("SELECT * FROM listings l \
+                            WHERE l.car_vin NOT IN (\
+                            SELECT l.car_vin\
+                            FROM listings l NATURAL JOIN unavailable u \
+                            WHERE ((u.unavailable >= %s) AND (u.unavailable <= %s))\
+                            )",[pick_up,drop_off])
+        results = cursor.fetchall()
+        result_dict["listings"] =results
+
+    return render(request,'app/search_results.html',result_dict)
+
+
+#Hannah
+#@login_required(login_url = 'login')		 #UNCOMMENT WHEN FINISHED
+def book(request, car_vin,pick_up,drop_off):
+#    email = request.user.username 		#UNCOMMENT WHEN FINISHED
+    context = {"pick_up":pick_up,"drop_off":drop_off}
+    
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM listings WHERE car_vin = %s", [car_vin])
+        results = cursor.fetchone()
+
+        context['carmake'] = results[1]
+        context['model'] = results[2]
+        context['year'] = results[3]
+        context['mileage'] = results[4]
+        context['rate'] = results[5]
+        context['owner'] = results[6]
+
+        if request.method == 'POST':
+            pick_up = request.POST.get("pick_up")
+            drop_off = request.POST.get("drop_off")
+
+    """
+    THINGS TO ADD:
+    - messages for successful & unsuccessful booking
+    - queries: insert to rentals, unavailable
+    - if successful, redirect to personalrentalcarinfo
+    """
+
+    return render(request,'app/book.html',context)
