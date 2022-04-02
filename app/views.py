@@ -463,25 +463,7 @@ def addpersonalcarinfoPH(request):
     """Shows the addpersonalcarinfo page"""
     context = {}
     status = ''
-    
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM listings WHERE owner = %s AND car_vin = %s", [request.POST['owner'],request.POST['car_vin']])
-        cust = cursor.fetchone()
-    if request.method == 'POST':
-        car_vin = request.POST.get('car_vin')
-        carmake = request.POST.get('carmake')
-        model = request.POST.get('model')
-        year = request.POST.get('year')
-        mileage = request.POST.get('mileage')
-        rate = request.POST.get('rate')
-        owner = request.POST.get('owner')
-        context['car_vin'] = car_vin
-        context['carmake'] = carmake
-        context['model'] = model
-        context['year'] = year
-        context['mileage'] = mileage
-        context['rate'] = rate
-        context['owner'] = owner
+    if request.POST:
         ## Check if customerid is already in the table
         with connection.cursor() as cursor:
             try:
