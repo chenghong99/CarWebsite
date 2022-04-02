@@ -629,15 +629,15 @@ def addrentalcarinfoPH(request):
           ##### all these below is for tables with the check constraints to catch the constraint errors  
             except Exception as e:
                 string = str(e)
-                message = ""
+                message = string
                 if 'duplicate key value violates unique constraint "rentals_pkey"' in string:  
-                    message = 'Pick-up date for this Car VIN already exists!' ####################################### to edit
+                    message = 'This car has already beedn booked on this date(s)!' 
                 elif 'new row for relation "rentals" violates check constraint "rentals_pick_up_check"' in string: ###### need go see correct error msg
                     message = 'Please check that drop_off date is not before pick_up date!'
                 elif 'new row for relation "rentals" violates check constraint "users_mobile_number_check"' in string:
                     message = 'Please enter a valid Singapore number!'####################################### to edit
                 messages.error(request, message)
-                return render(request, "addrentalcarinfoPH.html")
+                return render(request, "app/addrentalcarinfoPH.html")
             return redirect('rentalcarinfoPH') ##### i added this so it routes to rentalcarinfo.html after 
             
     context['status'] = status
