@@ -32,3 +32,4 @@ psql ${URI} -f sql/carshareClean.sql
 psql ${URI} -f sql/AppStoreClean.sql
 psql ${URI} -f sql/carshareSchema.sql
 psql ${URI} -f sql/populate.sql
+
