@@ -114,14 +114,19 @@ def signup(request):
 def profile(request):
     """Shows the profile page"""
     email = request.user.username
+    if request.POST:
+            with connection.cursor() as cursor:
+                cursor.execute("DELETE FROM listings WHERE car_vin = %s", [request.POST['carvin']])
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM customer WHERE email = %s", [email])
         cust = cursor.fetchone()
     with connection.cursor() as cursor:
-        cursor.execute("SELECT l.car_vin, l.carmake, l.model, r.pick_up, r.drop_off, r.rental_fee FROM listings l, rentals r WHERE r.owner = l.owner AND r.car_vin = l.car_vin AND r.owner = %s", [email])
+        cursor.execute("SELECT l.car_vin, l.carmake, l.model, r.pick_up, r.drop_off, r.rental_fee FROM listings l, rentals r \
+             WHERE r.owner = l.owner AND r.car_vin = l.car_vin AND r.owner = %s", [email])
         rentalinfo = cursor.fetchall()
     with connection.cursor() as cursor:
-        cursor.execute("SELECT l.car_vin, l.carmake, l.model, r.pick_up, r.drop_off, r.rental_fee FROM listings l, rentals r WHERE r.owner = l.owner AND r.car_vin = l.car_vin AND r.renter = %s", [email])
+        cursor.execute("SELECT l.car_vin, l.carmake, l.model, r.pick_up, r.drop_off, r.rental_fee FROM listings l, rentals r \
+             WHERE r.owner = l.owner AND r.car_vin = l.car_vin AND r.renter = %s", [email])
         myrental = cursor.fetchall()
     with connection.cursor() as cursor:
         cursor.execute("SELECT COUNT(*) FROM listings WHERE owner = %s", [email])
@@ -188,7 +193,7 @@ def editpersonalinfo(request):
                 return render(request, 'app/editpersonalinfo.html', context)
 	
             messages.success(request, 'Profile has been successfully updated!')
-            return redirect('profile')    
+            return redirect('editpersonalinfo')    
 
     return render(request,'app/editpersonalinfo.html', context)
 
@@ -228,23 +233,14 @@ def editpersonalcarinfo(request, car_vin):
                 string = str(e)
                 message = string
 		
-                if 'new row for relation "customer" violates check constraint "customer_mobile_number_check"' in string:
-                    message = 'Please enter a valid Singapore number!'
-		
-                elif 'out of range for type integer' in string:
-                    message = 'Please enter a valid Singapore number!'
-
-                elif 'out of range for type integer' in string:
-                    message = 'Please enter a valid Singapore number!'
-
-                elif 'duplicate key value violates unique constraint "customer_username_key"' in string:
-                    message = 'Customer username taken!'
+                if 'violates check constraint "listings_mileage_check"' in string:
+                    message = 'Please enter a valid mileage!'
 		
                 messages.error(request, message) 
                 return render(request, 'app/editpersonalcarinfo', context)
 	
             messages.success(request, 'Profile has been successfully updated!')
-            return redirect('profile')
+            return redirect('editpersonalcarinfo')
 
     return render(request,'app/editpersonalcarinfo.html', context)
 
@@ -256,6 +252,8 @@ def editrentalcarinfo(request):
     return render(request,'app/editrentalcarinfo.html')
 
 def admin(request):
+    """Routes to admin page"""
+
     return render(request, 'app/admin.html')
 
 ##Cheng Hong
@@ -278,13 +276,16 @@ def addcar(request):
             except Exception as e:
                 err = str(e)
                 message = err
-            
                 if 'new row for relation "listings" violates check constraint "listings_mileage_check"' in err:
                     message = 'Invalid milaeage'
                 elif 'new row for relation "listings" violates check constraint "listings_rate_check"' in err:
                     message = 'Invalid rate'
                 elif 'new row for relation "listings" violates check constraint "listings_year_check"' in err:
                     message = 'Invalid year'
+                elif 'duplicate key value violates unique constraint "listings_pkey" ' in err:
+                    message = 'Car VIN already taken try another Car VIN'
+                elif 'value too long for type character' in err:
+                    message = 'Invalid Car VIN more than 17 characters'
                 messages.error(request, message)
                 return render(request, 'app/addcar.html')
             messages.success(request, 'Car succesfully listed')

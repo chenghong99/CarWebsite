@@ -42,6 +42,10 @@
             <td> {{ car.5 }} </td>
             <td>
                 <a href="editpersonalcarinfo/{{car.0}}"><button>Edit</button></a>
+                <form method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="carvin" value="{{car.0}}"/>  <!-- this name="email" goes to views.py function [email], like name="id" to [id]-->
+                    <button onclick="return confirm('Are you sure you want to delete {{car.0}}}?');" type="submit" name="action" value="delete">Delete</button> 
             </td>
         </tr>
         {% endfor %}
