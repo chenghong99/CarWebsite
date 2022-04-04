@@ -683,7 +683,7 @@ def search(request):
 
         cursor.execute("SELECT DISTINCT model, 'No' FROM listings ORDER BY model")
         models = cursor.fetchall()
-        
+
     filter_dict = {}
     filter_dict['carmakes'] = carmakes
     filter_dict['models'] = models
@@ -727,7 +727,7 @@ def search(request):
 
         filters_id = str(hash(str(carmakes)+str(model)+str(max_year)+str(max_mileage)+str(min_rate)+str(max_rate)))[1:13]
         return redirect(search_results,pick_up,drop_off,filters_id,filter_dict)
-    return render(request,'app/search.html')
+    return render(request,'app/search.html',filter_dict)
 
 
 #Hannah
