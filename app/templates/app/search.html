@@ -22,9 +22,9 @@
         </div>
         <div id="div_id_carmakes" class="control-group"> 
           <label for="id_carmakes" class="control-label requiredField">Car Makes (multi-select with ctrl)</label> 
-            <div class="controls"><select name="carmakes" id="id_carmakes" multiple>
+            <div class="controls"><select name="carmakes" id="id_carmakes" multiple >
               {% for carmake in carmakes %}
-              <option value="{{carmake.0}}" {% if carmake.1 == "Yes" %}selected{% endif %}>{{carmake.0}}</option>
+              <option value="{{carmake.0}}">{{carmake.0}}</option>
               {% endfor %}
             </select> </div>
           </div>

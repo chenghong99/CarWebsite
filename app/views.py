@@ -678,13 +678,13 @@ def addrentalcarinfoPH(request):
 #Hannah
 def search(request):
     with connection.cursor() as cursor:
-        filter_dict = {}
         cursor.execute("SELECT DISTINCT carmake, 'No' FROM listings ORDER BY carmake")
         carmakes = cursor.fetchall()
 
         cursor.execute("SELECT DISTINCT model, 'No' FROM listings ORDER BY model")
         models = cursor.fetchall()
-
+        
+    filter_dict = {}
     filter_dict['carmakes'] = carmakes
     filter_dict['models'] = models
     filter_dict['max_year'] = ''
