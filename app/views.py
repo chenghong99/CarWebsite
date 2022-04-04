@@ -764,7 +764,7 @@ def book(request, car_vin,pick_up,drop_off):
             
             else:
                 messages.error(request,message)
-                return redirect('app/profile.html')
+                return redirect('profile')
     
 
     return render(request,'app/book.html',context)
