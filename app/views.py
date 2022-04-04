@@ -702,12 +702,20 @@ def search(request):
             return render(request,'app/search.html')
 
         carmakes = request.POST.getlist("carmakes")
+        carmakes_id = '0'
         if carmakes:
             filter_dict['carmakes'] = carmakes
-        
+            for i in range(len(carmakes)):
+                if carmakes[i][1] == 'Yes':
+                    carmakes_id += str(i)
+            
         models = request.POST.getlist("models")
+        models_id = '0'
         if models:
             filter_dict['models'] = models
+            for i in range(len(models)):
+                if models[i][1] == 'Yes':
+                    models_id += str(i)
 
         max_year = request.POST.get("max_year")
         if max_year:
@@ -724,8 +732,8 @@ def search(request):
         max_rate = request.POST.get("max_rate")
         if max_rate:
             filter_dict['max_rate'] = max_rate
-
-        filters_id = str(hash(str(carmakes)+str(models)+str(max_year)+str(max_mileage)+str(min_rate)+str(max_rate)))[1:13]
+        
+        filters_id = (carmakes_id+'/'+models_id+'/'+str(max_year if max_year else 0)+'/'+str(max_mileage if max_mileage else 0)+'/'+str(min_rate if min_rate else 0)+'/'+str(max_rate if max_rate else 0))
         return redirect(search_results,pick_up,drop_off,filters_id,filter_dict)
     return render(request,'app/search.html',filter_dict)
 
