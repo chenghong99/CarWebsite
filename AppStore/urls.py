@@ -44,7 +44,7 @@ urlpatterns = [
     path('rentalcarinfoPH/edit/<str:car_vin>/<str:pick_up>', app.views.editrentalcarinfoPH, name='editrentalcarinfoPH'),
     path('addrentalcarinfoPH', app.views.addrentalcarinfoPH, name='addrentalcarinfoPH'),
     path('search/', app.views.search, name='search'),
-    path('search_results/<str:pick_up>/<str:drop_off>/<str:filters_id>', app.views.search_results, name='search_results'),
+    path('search_results/<str:pick_up>/<str:drop_off>/<str:filter_dict>', app.views.search_results, name='search_results'),
     path('book/<str:car_vin>/<str:pick_up>/<str:drop_off>', app.views.book, name='book'),
 ]
 
