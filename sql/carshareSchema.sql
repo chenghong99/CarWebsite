@@ -42,5 +42,5 @@ CREATE TABLE IF NOT EXISTS rentals(
     CONSTRAINT chk_date CHECK (pick_up <= drop_off),
     rental_fee NUMERIC NOT NULL,
     PRIMARY KEY (car_vin,pick_up),
-    FOREIGN KEY (owner,car_vin) REFERENCES listings(owner,car_vin)
+    FOREIGN KEY (owner,car_vin) REFERENCES listings(owner,car_vin) ON DELETE CASCADE
 );
