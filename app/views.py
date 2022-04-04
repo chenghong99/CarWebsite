@@ -728,17 +728,12 @@ def search(request):
 
         
         filters_str = str(str(max_year if max_year else 0)+'/'+str(max_mileage if max_mileage else 0)+'/'+str(min_rate if min_rate else 0)+'/'+str(max_rate if max_rate else 0))
-        return redirect('search_results',pick_up,drop_off,filters_str)
+        return redirect('search_results',pick_up,drop_off,max_year,max_mileage,min_rate,max_rate)
     return render(request,'app/search.html',filter_dict)
 
 
 #Hannah
-def search_results(request,pick_up,drop_off,filters_str):
-    filter_lst = filters_str.split('/')
-    for i in range(len(filter_lst)):
-        filter_lst[i] = int(filter_lst[i])
-
-
+def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_rate):
     with connection.cursor() as cursor:
         result_dict = {}
         
@@ -748,10 +743,10 @@ def search_results(request,pick_up,drop_off,filters_str):
                             FROM listings l NATURAL JOIN unavailable u \
                             WHERE ((u.unavailable >= %s) AND (u.unavailable <= %s))\
                             )".format(pick_up,drop_off)
-        
-        if filter_lst[0]:
+        max_year = int(max_year)
+        if max_year:
             query += " INTERSECT "
-            query += "SELECT * FROM listings WHERE year <= %s".format(filter_lst[0])
+            query += "SELECT * FROM listings WHERE year <= %s".format(max_year)
 
         cursor.execute(query)
         results = cursor.fetchall()
