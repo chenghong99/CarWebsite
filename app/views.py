@@ -696,7 +696,7 @@ def search_results(request,pick_up,drop_off):
         result_dict['drop_off'] = drop_off
         cursor.execute("SELECT * FROM listings l \
                             WHERE l.car_vin NOT IN (\
-                            SELECT l.car_vin\
+                            SELECT l.car_vin \
                             FROM listings l NATURAL JOIN unavailable u \
                             WHERE ((u.unavailable >= %s) AND (u.unavailable <= %s))\
                             )",[pick_up,drop_off])
@@ -707,9 +707,9 @@ def search_results(request,pick_up,drop_off):
 
 
 #Hannah
-#@login_required(login_url = 'login')		 #UNCOMMENT WHEN FINISHED
+@login_required(login_url = 'login')		 #UNCOMMENT WHEN FINISHED
 def book(request, car_vin,pick_up,drop_off):
-#    email = request.user.username 		#UNCOMMENT WHEN FINISHED
+    email = request.user.username 		#UNCOMMENT WHEN FINISHED
     context = {"pick_up":pick_up,"drop_off":drop_off}
     
     with connection.cursor() as cursor:
@@ -726,12 +726,44 @@ def book(request, car_vin,pick_up,drop_off):
         if request.method == 'POST':
             pick_up = request.POST.get("pick_up")
             drop_off = request.POST.get("drop_off")
+            cursor.execute("SELECT l.car_vin\
+                            FROM listings l NATURAL JOIN unavailable u \
+                            WHERE ((u.unavailable >= %s) AND (u.unavailable <= %s))")
+            unavail_vins = cursor.fetchall()
+            is_car_unavail = car_vin in unavail_vins
+            #check if dates are not in unavailable 
+            if is_car_unavail:
+                message = "Error! Car is unavailable on selected dates"
+                messages.error(request,message)
+                return render(request,'app/book.html',context)
+            else:
+                message = "Booking was successful"
 
-    """
-    THINGS TO ADD:
-    - messages for successful & unsuccessful booking
-    - queries: insert to rentals, unavailable
-    - if successful, redirect to personalrentalcarinfo
-    """
+            #insert statements for successful booking
+            #insert into rentals
+            #booking is inclusive of pick_up and drop_off dates
+            try:
+                num_days = (datetime.date(int(drop_off[:4]),int(drop_off[5:7]),int(drop_off[-2:])) \
+                    - datetime.date(int(pick_up[:4]),int(pick_up[5:7]),int(pick_up[-2:]))).days + 1
+                cursor.execute("INSERT INTO rentals VALUES\
+                    (%s,%s,%s,%s,%s,%s)",[context['owner'],email,car_vin,pick_up,drop_off,context['rate']*num_days])
+
+                #insert into unavailable for all dates
+                for i in range(num_days):
+                    bkdate = datetime.datetime.strptime(pick_up,"%Y-%m-%d") + datetime.timedelta(days=i)
+                    cursor.execute("INSERT INTO unavailable VALUES\
+                        (%s,%s,%s)",[car_vin,context['owner'],bkdate])
+
+            #ERROR: pick_up > drop_off
+            except Exception as e: #unsuccessful booking message
+                string = str(e)
+                if ('new row for relation "rentals" violates check constraint "chk_date"' in string):
+                    message = "Error! Pick-up date must be before the drop-off date"
+                messages.error(request,message)
+                return render(request,'app/book.html',context)
+            
+            else:
+                redirect('app/profile.html')
+    
 
     return render(request,'app/book.html',context)
