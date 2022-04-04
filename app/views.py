@@ -677,16 +677,16 @@ def addrentalcarinfoPH(request):
 
 #Hannah
 def search(request):
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT DISTINCT carmake, 'No' FROM listings ORDER BY carmake")
-        carmakes = cursor.fetchall()
+    # with connection.cursor() as cursor:
+    #     cursor.execute("SELECT DISTINCT carmake, 'No' FROM listings ORDER BY carmake")
+    #     carmakes = cursor.fetchall()
 
-        cursor.execute("SELECT DISTINCT model, 'No' FROM listings ORDER BY model")
-        models = cursor.fetchall()
+    #     cursor.execute("SELECT DISTINCT model, 'No' FROM listings ORDER BY model")
+    #     models = cursor.fetchall()
 
     filter_dict = {}
-    filter_dict['carmakes'] = carmakes
-    filter_dict['models'] = models
+    # filter_dict['carmakes'] = carmakes
+    # filter_dict['models'] = models
     filter_dict['max_year'] = ''
     filter_dict['max_mileage'] = ''
     filter_dict['min_rate'] = ''
@@ -701,19 +701,19 @@ def search(request):
             messages.error(request,"Pick-up date cannot be after drop-off date")
             return render(request,'app/search.html')
 
-        carmakes = request.POST.getlist("carmakes")
-        carmakes_id = '0'
-        if carmakes:
-            filter_dict['carmakes'] = carmakes
-            for i in range(len(carmakes)):
-                carmakes_id += str(i)
+        # carmakes = request.POST.getlist("carmakes")
+        # carmakes_id = '0'
+        # if carmakes:
+        #     filter_dict['carmakes'] = carmakes
+        #     for i in range(len(carmakes)):
+        #         carmakes_id += str(i)
             
-        models = request.POST.getlist("models")
-        models_id = '0'
-        if models:
-            filter_dict['models'] = models
-            for i in range(len(models)):
-                models_id += str(i)
+        # models = request.POST.getlist("models")
+        # models_id = '0'
+        # if models:
+        #     filter_dict['models'] = models
+        #     for i in range(len(models)):
+        #         models_id += str(i)
 
         max_year = request.POST.get("max_year")
         if max_year:
@@ -731,8 +731,8 @@ def search(request):
         if max_rate:
             filter_dict['max_rate'] = max_rate
         
-        filters_id = str(carmakes_id+'/'+models_id+'/'+str(max_year if max_year else 0)+'/'+str(max_mileage if max_mileage else 0)+'/'+str(min_rate if min_rate else 0)+'/'+str(max_rate if max_rate else 0))
-        return redirect('app:search_results',pick_up,drop_off,filters_id)
+        #filters_id = str(carmakes_id+'/'+models_id+'/'+str(max_year if max_year else 0)+'/'+str(max_mileage if max_mileage else 0)+'/'+str(min_rate if min_rate else 0)+'/'+str(max_rate if max_rate else 0))
+        return redirect('search_results',pick_up,drop_off,filter_dict)
     return render(request,'app/search.html',filter_dict)
 
 

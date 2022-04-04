@@ -20,23 +20,7 @@
                 <input type="date" placeholder="Enter Drop-Off Date" name="drop_off" required="" control-id="ControlID-2"><br><br>
 
         </div>
-        <div id="div_id_carmakes" class="control-group"> 
-          <label for="id_carmakes" class="control-label requiredField">Car Makes (multi-select with ctrl)</label> 
-            <div class="controls"><select name="carmakes" id="id_carmakes" multiple >
-              {% for carmake in carmakes %}
-              <option value="{{carmake.0}}" {% if carmake.1 == "Yes" %}selected{% endif %}>{{carmake.0}}</option>
-              {% endfor %}
-            </select> </div>
-          </div>
 
-        <div id="div_id_models" class="control-group"> 
-          <label for="id_models" class="control-label requiredField">Models (multi-select with ctrl)</label> 
-            <div class="controls"><select name="models" id="id_models" multiple>
-              {% for model in models %}
-              <option value="{{model.0}}" {% if model.1 == "Yes" %}selected{% endif %}>{{model.0}}</option>
-              {% endfor %}
-            </select> </div>
-          </div>
 
         <div id="div_max_year" class="control-group"> 
           <label for="max_year" class="control-label requiredField">Max Year</label> </div> 
