@@ -725,7 +725,7 @@ def search(request):
         if max_rate:
             filter_dict['max_rate'] = max_rate
 
-        filters_id = str(hash(str(carmakes)+str(model)+str(max_year)+str(max_mileage)+str(min_rate)+str(max_rate)))[1:13]
+        filters_id = str(hash(str(carmakes)+str(models)+str(max_year)+str(max_mileage)+str(min_rate)+str(max_rate)))[1:13]
         return redirect(search_results,pick_up,drop_off,filters_id,filter_dict)
     return render(request,'app/search.html',filter_dict)
 
