@@ -727,7 +727,7 @@ def search(request):
         max_rate = request.POST.get("max_rate")
 
         
-        filters_str = str(+str(max_year if max_year else 0)+'/'+str(max_mileage if max_mileage else 0)+'/'+str(min_rate if min_rate else 0)+'/'+str(max_rate if max_rate else 0))
+        filters_str = str(str(max_year if max_year else 0)+'/'+str(max_mileage if max_mileage else 0)+'/'+str(min_rate if min_rate else 0)+'/'+str(max_rate if max_rate else 0))
         return redirect('search_results',pick_up,drop_off,filters_str)
     return render(request,'app/search.html',filter_dict)
 
@@ -736,10 +736,8 @@ def search(request):
 def search_results(request,pick_up,drop_off,filters_str):
     filter_lst = filters_str.split('/')
     for i in range(len(filter_lst)):
-        if filter_lst[i]:
-            filter_lst[i] = int(filter_lst[i])
-        else:
-            filter_lst[i] = 0
+        filter_lst[i] = int(filter_lst[i])
+
 
     with connection.cursor() as cursor:
         result_dict = {}
