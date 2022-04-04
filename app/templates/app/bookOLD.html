@@ -1,0 +1,47 @@
+{% block content %}
+{% load static %}
+  <body>
+    <div>
+      <form method = "POST">
+        {% csrf_token %}
+
+        <div id="div_id_carmake" class="control-group"> 
+            <label for="id_carmake" class="control-label requiredField">Car Make</label> 
+              <div class="controls"> <input type="text" id="id_carmake" name="carmake" value={{carmake}} > </div> 
+          </div>
+        <div id="div_id_model" class="control-group"> 
+            <label for="id_model" class="control-label requiredField">Model</label> 
+              <div class="controls"> <input type="text" id="id_model" name="model" value={{model}} > </div> 
+          </div>
+        <div id="div_id_year" class="control-group"> 
+            <label for="id_year" class="control-label requiredField">Year</label> 
+              <div class="controls"> <input type="number" id="id_year" name="year" value={{year}} > </div> 
+          </div>
+        <div id="div_id_mileage" class="control-group"> 
+            <label for="id_mileage" class="control-label requiredField">Mileage</label> 
+              <div class="controls"> <input type="number" id="id_mileage" name="mileage" value={{mileage}} > </div> 
+          </div>
+        <div id="div_id_rate" class="control-group"> 
+            <label for="id_rate" class="control-label requiredField">Rate</label> 
+              <div class="controls"> <input type="number" id="id_rate" name="rate" value={{rate}} > </div> 
+          </div>
+        <div id="div_id_owner" class="control-group"> 
+            <label for="id_owner" class="control-label requiredField">Owner</label> 
+              <div class="controls"> <input type="text" id="id_owner" name="owner" value={{owner}} > </div> 
+          </div>
+        <div id="div_id_pick_up" class="control-group"> 
+          <label for="id_pick_up" class="control-label requiredField">From</label> 
+            <div class="controls"> <input type="date" id="id_pick_up" name="pick_up" value={{pick_up}} > </div> 
+        </div> 
+        
+        <div id="div_id_drop_off" class="control-group"> 
+          <label for="id_drop_off" class="control-label requiredField">To</label> 
+            <div class="controls"> <input type="date" id="id_drop_off" name="drop_off" value={{drop_off}} > </div> 
+        </div> 
+        <button type="submit">Confirm</button>
+
+      </form>
+    </div>
+   
+  </body>
+{% endblock %}
