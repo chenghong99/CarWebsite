@@ -681,50 +681,52 @@ def search(request):
         filter_dict = {}
         cursor.execute("SELECT DISTINCT carmake, 'No' FROM listings ORDER BY carmake")
         carmakes = cursor.fetchall()
+
         cursor.execute("SELECT DISTINCT model, 'No' FROM listings ORDER BY model")
         models = cursor.fetchall()
-        filter_dict['carmakes'] = carmakes
-        filter_dict['models'] = models
-        filter_dict['max_year'] = ''
-        filter_dict['max_mileage'] = ''
-        filter_dict['min_rate'] = ''
-        filter_dict['max_rate'] = ''
-        if request.method == "POST":
-            pick_up = request.POST.get("pick_up")
-            drop_off = request.POST.get("drop_off")
-            filter_dict['pick_up'] = pick_up
-            filter_dict['drop_off'] = drop_off
-            #IF PICK UP DATE > DROP OFF DATE THEN RAISE ERROR
-            if datetime.date(int(pick_up[:4]),int(pick_up[5:7]),int(pick_up[-2:])) > datetime.date(int(drop_off[:4]),int(drop_off[5:7]),int(drop_off[-2:])):
-                messages.error(request,"Pick-up date cannot be after drop-off date")
-                return render(request,'app/search.html')
 
-            carmakes = request.POST.getlist("carmakes")
-            if carmakes:
-                filter_dict['carmakes'] = carmakes
-            
-            models = request.POST.getlist("models")
-            if models:
-                filter_dict['models'] = models
+    filter_dict['carmakes'] = carmakes
+    filter_dict['models'] = models
+    filter_dict['max_year'] = ''
+    filter_dict['max_mileage'] = ''
+    filter_dict['min_rate'] = ''
+    filter_dict['max_rate'] = ''
+    if request.method == "POST":
+        pick_up = request.POST.get("pick_up")
+        drop_off = request.POST.get("drop_off")
+        filter_dict['pick_up'] = pick_up
+        filter_dict['drop_off'] = drop_off
+        #IF PICK UP DATE > DROP OFF DATE THEN RAISE ERROR
+        if datetime.date(int(pick_up[:4]),int(pick_up[5:7]),int(pick_up[-2:])) > datetime.date(int(drop_off[:4]),int(drop_off[5:7]),int(drop_off[-2:])):
+            messages.error(request,"Pick-up date cannot be after drop-off date")
+            return render(request,'app/search.html')
 
-            max_year = request.POST.get("max_year")
-            if max_year:
-                filter_dict['max_year'] = max_year
+        carmakes = request.POST.getlist("carmakes")
+        if carmakes:
+            filter_dict['carmakes'] = carmakes
+        
+        models = request.POST.getlist("models")
+        if models:
+            filter_dict['models'] = models
 
-            max_mileage = request.POST.get("max_mileage")
-            if max_mileage:
-                filter_dict['max_mileage'] = max_mileage
- 
-            min_rate = request.POST.get("min_rate")
-            if min_rate:
-                filter_dict['min_rate'] = min_rate
+        max_year = request.POST.get("max_year")
+        if max_year:
+            filter_dict['max_year'] = max_year
 
-            max_rate = request.POST.get("max_rate")
-            if max_rate:
-                filter_dict['max_rate'] = max_rate
+        max_mileage = request.POST.get("max_mileage")
+        if max_mileage:
+            filter_dict['max_mileage'] = max_mileage
 
-            filters_id = str(hash(str(carmakes)+str(model)+str(max_year)+str(max_mileage)+str(min_rate)+str(max_rate)))[1:13]
-            return redirect(search_results,pick_up,drop_off,filters_id,filter_dict)
+        min_rate = request.POST.get("min_rate")
+        if min_rate:
+            filter_dict['min_rate'] = min_rate
+
+        max_rate = request.POST.get("max_rate")
+        if max_rate:
+            filter_dict['max_rate'] = max_rate
+
+        filters_id = str(hash(str(carmakes)+str(model)+str(max_year)+str(max_mileage)+str(min_rate)+str(max_rate)))[1:13]
+        return redirect(search_results,pick_up,drop_off,filters_id,filter_dict)
     return render(request,'app/search.html')
 
 
