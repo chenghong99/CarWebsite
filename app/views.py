@@ -714,30 +714,29 @@ def search(request):
         #     filter_dict['models'] = models
         #     for i in range(len(models)):
         #         models_id += str(i)
-
+        
         max_year = request.POST.get("max_year")
-        if max_year:
-            filter_dict['max_year'] = max_year
+
 
         max_mileage = request.POST.get("max_mileage")
-        if max_mileage:
-            filter_dict['max_mileage'] = max_mileage
+ 
 
         min_rate = request.POST.get("min_rate")
-        if min_rate:
-            filter_dict['min_rate'] = min_rate
+
 
         max_rate = request.POST.get("max_rate")
-        if max_rate:
-            filter_dict['max_rate'] = max_rate
+
         
-        #filters_id = str(carmakes_id+'/'+models_id+'/'+str(max_year if max_year else 0)+'/'+str(max_mileage if max_mileage else 0)+'/'+str(min_rate if min_rate else 0)+'/'+str(max_rate if max_rate else 0))
-        return redirect('search_results',pick_up,drop_off,filter_dict)
+        filters_str = str(+str(max_year if max_year else 0)+'/'+str(max_mileage if max_mileage else 0)+'/'+str(min_rate if min_rate else 0)+'/'+str(max_rate if max_rate else 0))
+        return redirect('search_results',pick_up,drop_off,filters_str)
     return render(request,'app/search.html',filter_dict)
 
 
 #Hannah
-def search_results(request,pick_up,drop_off,filter_dict):
+def search_results(request,pick_up,drop_off,filters_str):
+    filter_lst = filters_str.split('/')
+    filter_lst = [int(filter_lst[i]) for i in range(len(filter_lst)) if filter_lst[i] else 0]
+
     with connection.cursor() as cursor:
         result_dict = {}
         
@@ -748,9 +747,9 @@ def search_results(request,pick_up,drop_off,filter_dict):
                             WHERE ((u.unavailable >= %s) AND (u.unavailable <= %s))\
                             )".format(pick_up,drop_off)
         
-        if filter_dict['max_year']:
+        if filter_lst[0]:
             query += " INTERSECT "
-            query += "SELECT * FROM listings WHERE year <= %s".format(filter_dict['max_year'])
+            query += "SELECT * FROM listings WHERE year <= %s".format(filter_lst[0])
 
         cursor.execute(query)
         results = cursor.fetchall()
