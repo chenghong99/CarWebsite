@@ -737,15 +737,22 @@ def search(request):
 
 
 #Hannah
-def search_results(request,pick_up,drop_off,filters_id):
+def search_results(request,pick_up,drop_off,filter_dict):
     with connection.cursor() as cursor:
         result_dict = {}
-        cursor.execute("SELECT * FROM listings l \
+        
+        query = "SELECT * FROM listings l \
                             WHERE l.car_vin NOT IN (\
                             SELECT l.car_vin \
                             FROM listings l NATURAL JOIN unavailable u \
                             WHERE ((u.unavailable >= %s) AND (u.unavailable <= %s))\
-                            )",[pick_up,drop_off])
+                            )".format(pick_up,drop_off)
+        
+        if filter_dict['max_year']:
+            query += " INTERSECT "
+            query += "SELECT * FROM listings WHERE year <= %s".format(filter_dict['max_year'])
+
+        cursor.execute(query)
         results = cursor.fetchall()
         result_dict["listings"] =results
 
