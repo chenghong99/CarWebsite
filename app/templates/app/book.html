@@ -2,6 +2,13 @@
 {% load static %}
   <body>
     <div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <a href = "{% url 'search_results' pick_up drop_off %}">Back to Search Results</a>
         <table border = 1>
             <thead>

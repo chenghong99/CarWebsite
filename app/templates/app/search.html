@@ -2,6 +2,13 @@
 {% load static %}
   <body> 
     <div>
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
       <form method = "POST">
         {% csrf_token %}
         <div id = "pick_up" class = "control-group">
