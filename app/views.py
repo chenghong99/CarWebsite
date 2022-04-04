@@ -683,7 +683,7 @@ def search(request):
         if request.method == "POST":
             pick_up = request.POST.get("pick_up")
             drop_off = request.POST.get("drop_off")
-            if pick_up < drop_off:
+            if datetime.date(int(pick_up[:4]),int(pick_up[5:7]),int(pick_up[-2:])) < datetime.date(int(drop_off[:4]),int(drop_off[5:7]),int(drop_off[-2:])):
                 messages.error(request,"Pick-up date cannot be after drop-off date")
                 return render(request,'app/search.html')
             ##ADD MORE FILTERS: must include in redirect args & search_results as *args
