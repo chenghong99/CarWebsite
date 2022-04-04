@@ -706,16 +706,14 @@ def search(request):
         if carmakes:
             filter_dict['carmakes'] = carmakes
             for i in range(len(carmakes)):
-                if carmakes[i][1] == 'Yes':
-                    carmakes_id += str(i)
+                carmakes_id += str(i)
             
         models = request.POST.getlist("models")
         models_id = '0'
         if models:
             filter_dict['models'] = models
             for i in range(len(models)):
-                if models[i][1] == 'Yes':
-                    models_id += str(i)
+                models_id += str(i)
 
         max_year = request.POST.get("max_year")
         if max_year:
