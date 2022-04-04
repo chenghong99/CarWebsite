@@ -1,5 +1,6 @@
 from datetime import datetime
 from tokenize import String
+from unittest import result
 from django.shortcuts import render, redirect
 from django.db import connection
 from django.contrib.auth.models import User
@@ -677,26 +678,60 @@ def addrentalcarinfoPH(request):
 #Hannah
 def search(request):
     with connection.cursor() as cursor:
-        result_dict = {}
-        result_dict['pick_up'] = ''
-        result_dict['drop_off'] = ''
+        filter_dict = {}
+        cursor.execute("SELECT DISTINCT carmake FROM listings ORDER BY carmake")
+        carmakes = cursor.fetchall()
+        cursor.execute("SELECT DISTINCT model FROM listings ORDER BY model")
+        models = cursor.fetchall()
+        filter_dict['carmake'] = ''
+        filter_dict['model'] = ''
+        filter_dict['max_year'] = ''
+        filter_dict['max_mileage'] = ''
+        filter_dict['min_rate'] = ''
+        filter_dict['max_rate'] = ''
         if request.method == "POST":
             pick_up = request.POST.get("pick_up")
             drop_off = request.POST.get("drop_off")
+            filter_dict['pick_up'] = pick_up
+            filter_dict['drop_off'] = drop_off
+            #IF PICK UP DATE > DROP OFF DATE THEN RAISE ERROR
             if datetime.date(int(pick_up[:4]),int(pick_up[5:7]),int(pick_up[-2:])) > datetime.date(int(drop_off[:4]),int(drop_off[5:7]),int(drop_off[-2:])):
                 messages.error(request,"Pick-up date cannot be after drop-off date")
                 return render(request,'app/search.html')
-            ##ADD MORE FILTERS: must include in redirect args & search_results as *args
-            return redirect(search_results,pick_up,drop_off)
+
+            carmake = request.POST.get("max_year")
+            if carmake:
+                filter_dict['carmakes'] = carmake
+            
+            model = request.POST.get("model")
+            if model:
+                filter_dict['model'] = model
+
+            max_year = request.POST.get("max_year")
+            if max_year:
+                filter_dict['max_year'] = max_year
+
+            max_mileage = request.POST.get("max_mileage")
+            if max_mileage:
+                filter_dict['max_mileage'] = max_mileage
+ 
+            min_rate = request.POST.get("min_rate")
+            if min_rate:
+                filter_dict['min_rate'] = min_rate
+
+            max_rate = request.POST.get("max_rate")
+            if max_rate:
+                filter_dict['max_rate'] = max_rate
+
+            filters_id = str(hash(str(carmake)+str(model)+str(max_year)+str(max_mileage)+str(min_rate)+str(max_rate)))[1:13]
+            return redirect(search_results,pick_up,drop_off,filters_id,filter_dict)
     return render(request,'app/search.html')
 
 
 #Hannah
-def search_results(request,pick_up,drop_off):
+def search_results(request,pick_up,drop_off,filters_id,filter_dict):
     with connection.cursor() as cursor:
         result_dict = {}
-        result_dict['pick_up'] = pick_up
-        result_dict['drop_off'] = drop_off
         cursor.execute("SELECT * FROM listings l \
                             WHERE l.car_vin NOT IN (\
                             SELECT l.car_vin \
@@ -761,7 +796,7 @@ def book(request, car_vin,pick_up,drop_off):
             except Exception as e: #unsuccessful booking message
                 string = str(e)
                 if ('new row for relation "rentals" violates check constraint "chk_date"' in string):
-                    message = "Error! Pick-up date must be before the drop-off date"
+                    message = "Error! Pick-up date cannot be after drop-off date"
                 messages.error(request,message)
                 return render(request,'app/book.html',context)
             

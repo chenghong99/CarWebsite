@@ -20,9 +20,38 @@
                 <input type="date" placeholder="Enter Drop-Off Date" name="drop_off" required="" control-id="ControlID-2"><br><br>
 
         </div>
+        <div id="div_id_carmake" class="control-group"> 
+          <label for="id_carmake" class="control-label requiredField">Car Make (multi-select with ctrl)</label> 
+            <div class="controls"><select name="carmake" id="id_carmake" multiple>
+              {% for carmake in carmakes %}
+              <option value="{{carmake.0}}" {% if carmake.1 == "Yes" %}selected{% endif %}>{{carmake.0}}</option>
+              {% endfor %}
+            </select> </div>
+          </div>
 
-
-        <button type="submit" >Search</button>
+        <div id="div_id_model" class="control-group"> 
+          <label for="id_model" class="control-label requiredField">Model (multi-select with ctrl)</label> 
+            <div class="controls"><select name="model" id="id_model" multiple>
+              {% for model in models %}
+              <option value="{{model.0}}" {% if model.1 == "Yes" %}selected{% endif %}>{{model.0}}</option>
+              {% endfor %}
+            </select> </div>
+          </div>
+        <div id="div_max_year" class="control-group"> 
+          <label for="max_year" class="control-label requiredField">Max Year</label> </div> 
+            <div class="controls"> <input type="number" name="max_year" id="id_max_year" min="0"> </div>
+        <div id="div_max_mileage" class="control-group"> 
+          <label for="max_mileage" class="control-label requiredField">Max Mileage</label> </div> 
+            <div class="controls"> <input type="number" name="max_mileage" id="id_max_mileage" min="0"> </div>
+            <div id="div_id_rate" class="control-group"> 
+              <label for="id_rate" class="control-label requiredField">Rate(Per day)</label> </div> 
+              <label for="id_min_rate" class = "control-label requiredField">Min</label>
+                <div class="controls"> <input type="number" name="min_rate" id="id_min_rate" min="1"> </div>
+              <label for="id_max_rate" class = "control-label requiredField">Max</label>
+                <div class="controls"> <input type="number" name="max_rate" id="id_max_rate" min="1"> </div>
+        
+        
+            <button type="submit" >Search</button>
         <a href = "{% url 'search' %}">Clear Filter</a>
 
       </form>
