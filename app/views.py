@@ -735,7 +735,11 @@ def search(request):
 #Hannah
 def search_results(request,pick_up,drop_off,filters_str):
     filter_lst = filters_str.split('/')
-    filter_lst = [int(filter_lst[i]) for i in range(len(filter_lst)) if filter_lst[i] else 0]
+    for i in range(len(filter_lst)):
+        if filter_lst[i]:
+            filter_lst[i] = int(filter_lst[i])
+        else:
+            filter_lst[i] = 0
 
     with connection.cursor() as cursor:
         result_dict = {}
