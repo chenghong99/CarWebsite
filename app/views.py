@@ -679,12 +679,12 @@ def addrentalcarinfoPH(request):
 def search(request):
     with connection.cursor() as cursor:
         filter_dict = {}
-        cursor.execute("SELECT DISTINCT carmake FROM listings ORDER BY carmake")
+        cursor.execute("SELECT DISTINCT carmake, 'No' FROM listings ORDER BY carmake")
         carmakes = cursor.fetchall()
-        cursor.execute("SELECT DISTINCT model FROM listings ORDER BY model")
+        cursor.execute("SELECT DISTINCT model, 'No' FROM listings ORDER BY model")
         models = cursor.fetchall()
-        filter_dict['carmake'] = ''
-        filter_dict['model'] = ''
+        filter_dict['carmakes'] = carmakes
+        filter_dict['models'] = models
         filter_dict['max_year'] = ''
         filter_dict['max_mileage'] = ''
         filter_dict['min_rate'] = ''
@@ -699,13 +699,13 @@ def search(request):
                 messages.error(request,"Pick-up date cannot be after drop-off date")
                 return render(request,'app/search.html')
 
-            carmake = request.POST.get("max_year")
-            if carmake:
-                filter_dict['carmakes'] = carmake
+            carmakes = request.POST.getlist("carmakes")
+            if carmakes:
+                filter_dict['carmakes'] = carmakes
             
-            model = request.POST.get("model")
-            if model:
-                filter_dict['model'] = model
+            models = request.POST.getlist("models")
+            if models:
+                filter_dict['models'] = models
 
             max_year = request.POST.get("max_year")
             if max_year:
@@ -723,7 +723,7 @@ def search(request):
             if max_rate:
                 filter_dict['max_rate'] = max_rate
 
-            filters_id = str(hash(str(carmake)+str(model)+str(max_year)+str(max_mileage)+str(min_rate)+str(max_rate)))[1:13]
+            filters_id = str(hash(str(carmakes)+str(model)+str(max_year)+str(max_mileage)+str(min_rate)+str(max_rate)))[1:13]
             return redirect(search_results,pick_up,drop_off,filters_id,filter_dict)
     return render(request,'app/search.html')
 
