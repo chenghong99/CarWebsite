@@ -715,17 +715,21 @@ def search(request):
         #     for i in range(len(models)):
         #         models_id += str(i)
         
-        max_year = request.POST.get("max_year")
-
+        max_year = request.POST.get("max_year") 
+        if not max_year:
+            max_year = 0
 
         max_mileage = request.POST.get("max_mileage")
- 
+        if not max_mileage:
+            max_mileage = 0
 
         min_rate = request.POST.get("min_rate")
-
+        if not min_rate:
+            min_rate = 0
 
         max_rate = request.POST.get("max_rate")
-
+        if not max_rate:
+            max_rate = 0
         
         filters_str = str(str(max_year if max_year else 0)+'/'+str(max_mileage if max_mileage else 0)+'/'+str(min_rate if min_rate else 0)+'/'+str(max_rate if max_rate else 0))
         return redirect('search_results',pick_up,drop_off,max_year,max_mileage,min_rate,max_rate)
