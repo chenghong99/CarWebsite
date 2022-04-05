@@ -420,10 +420,12 @@ def personalcarinfoPH(request):
     if request.POST:
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM listings WHERE owner = %s AND car_vin = %s", [request.POST['owner'],request.POST['car_vin']]) ## gotta make sure the constraint satisfied...foreign key
-                ## can cursor.execute include multiple queries???? COZ NEED DELETE FROM TABLE BEFORE CAN DELETE FROM MASTERTABLE
-                ## DO I NEED TO MAKE SURE THAT?? COZ SCHEMA GOT ON DELETE CASCADE
-                #################################################################################################################################
+                cursor.execute("DELETE FROM listings WHERE owner = %s AND car_vin = %s", [request.POST['owner'],request.POST['car_vin']]) 
+    
+    with connection.cursor() as cursor:
+    cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM listings")
+    numlist = cursor.fetchone() 
+	
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM listings ORDER BY owner")
@@ -512,7 +514,12 @@ def unavailablecarinfoPH(request):
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM unavailable WHERE car_vin = %s AND unavailable = %s", [request.POST['car_vin'],request.POST['unavailable']])
-                
+    
+    with connection.cursor() as cursor:
+    cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM unavailable")
+    numcarunav = cursor.fetchone()   
+	
+	
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM unavailable ORDER BY unavailable")
@@ -591,7 +598,9 @@ def rentalcarinfoPH(request):
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM rentals WHERE car_vin = %s AND pick_up = %s", [request.POST['car_vin'],request.POST['pick_up']])
-                
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM rentals")
+        carsrented = cursor.fetchone()      
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM rentals ORDER BY pick_up")
