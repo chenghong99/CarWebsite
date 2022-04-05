@@ -736,10 +736,11 @@ def search(request):
         if not max_rate:
             max_rate = 'x'
         
-	if max_rate != 'x' and min_rate != 'x':
-            if int(max_rate) < int(min_rate):
-                messages.error(request,"Max rate must be more than or equal to min rate")
-                return render(request,'app/search.html')
+        if max_rate != 'x' and min_rate != 'x':
+                if int(max_rate) < int(min_rate):
+                    messages.error(request,"Max rate must be more than or equal to min rate")
+                    return render(request,'app/search.html')
+                    
         return redirect('search_results',pick_up,drop_off,max_year,max_mileage,min_rate,max_rate,carmakes_id,models_id)
     return render(request,'app/search.html',filter_dict)
 
