@@ -4,9 +4,6 @@
 <body>
     <h2> Personal Info database </h2>
     <img src="{% static 'app/images/Customer.png' %}" width="10%"   alt="Customer logo"/><br/>
-    {% for i in numcust %}
-    <label>Number of customers: {{i}}</label><br>
-    
     <a href="addpersonalinfo"><button> Add Personal Info </button></a>   <!--href goes to urls.py and then urls.py goes to views.py  -->
                                                                          
     <br>
