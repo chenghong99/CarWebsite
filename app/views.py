@@ -708,7 +708,7 @@ def search(request):
             for i in range(len(carmakes)):
                 carmakes_id += str(i)
         else:
-            carmakes_id = 0
+            carmakes_id = 'x'
             
         # models = request.POST.getlist("models")
         # models_id = '0'
@@ -719,19 +719,19 @@ def search(request):
         
         max_year = request.POST.get("max_year") 
         if not max_year:
-            max_year = 0
+            max_year = 'x'
 
         max_mileage = request.POST.get("max_mileage")
         if not max_mileage:
-            max_mileage = 0
+            max_mileage = 'x'
 
         min_rate = request.POST.get("min_rate")
         if not min_rate:
-            min_rate = 0
+            min_rate = 'x'
 
         max_rate = request.POST.get("max_rate")
         if not max_rate:
-            max_rate = 0
+            max_rate = 'x'
         
         return redirect('search_results',pick_up,drop_off,max_year,max_mileage,min_rate,max_rate,carmakes_id)
     return render(request,'app/search.html',filter_dict)
@@ -747,27 +747,27 @@ def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_ra
                             FROM listings l NATURAL JOIN unavailable u \
                             WHERE ((u.unavailable >= '{}') AND (u.unavailable <= '{}'))\
                             )""".format(pick_up,drop_off)
-        if max_year:
+        if max_year != 'x':
             query += " INTERSECT "
             query += """SELECT * FROM listings WHERE year <= {}""".format(max_year)
 
-        if max_mileage:
+        if max_mileage!= 'x':
             query += " INTERSECT "
             query += """SELECT * FROM listings WHERE mileage <= {}""".format(max_mileage)
         
-        if min_rate:
+        if min_rate!= 'x':
             query += " INTERSECT "
             query += """SELECT * FROM listings WHERE rate >= {}""".format(min_rate)
-        if max_rate:
+        if max_rate!= 'x':
             query += " INTERSECT "
             query += """SELECT * FROM listings WHERE rate <= {}""".format(max_rate)
 
-        if carmakes_id:
+        if carmakes_id != 'x':
             cursor.execute("SELECT DISTINCT carmake FROM listings ORDER BY carmake")
             carmakes_all = cursor.fetchall()
             carmakes = []
             for i in carmakes_id:
-                carmakes.append(carmakes_all[int(i)])
+                carmakes.append(carmakes_all[int(i)][0])
             temp = ""
             for carmake in carmakes:
                 if temp:
@@ -777,7 +777,7 @@ def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_ra
             if temp:
                 query += " INTERSECT "
                 query += "({})".format(temp)
-                
+
         cursor.execute(query)
         results = cursor.fetchall()
         result_dict["listings"] =results
