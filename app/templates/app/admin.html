@@ -4,8 +4,8 @@
 <body>
     <h2> Personal Info database </h2>
     <img src="{% static 'app/images/Customer.png' %}" width="10%"   alt="Customer logo"/><br/>
-    
-    <label>Number of customers: {{numcust}}</label><br>
+    {% for i in numcust %}
+    <label>Number of customers: {{i}}</label><br>
     
     <a href="addpersonalinfo"><button> Add Personal Info </button></a>   <!--href goes to urls.py and then urls.py goes to views.py  -->
                                                                          
@@ -36,6 +36,7 @@
             <th>Phone Number</th>
             
         </thead>
+            
         {% for cust in records %}             <!-- records is the key in the dictionary in the last 4 methods in views.py -->
         <tr>
             <td> {{ cust.0 }} </td>
