@@ -753,6 +753,17 @@ def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_ra
             query += " INTERSECT "
             query += """SELECT * FROM listings WHERE year <= {}""".format(max_year)
 
+        if max_mileage:
+            query += " INTERSECT "
+            query += """SELECT * FROM listings WHERE mileage <= {}""".format(max_mileage)
+        
+        if min_rate:
+            query += " INTERSECT "
+            query += """SELECT * FROM listings WHERE rate >= {}""".format(min_rate)
+        if max_rate:
+            query += " INTERSECT "
+            query += """SELECT * FROM listings WHERE rate <= {}""".format(max_rate)
+            
         cursor.execute(query)
         results = cursor.fetchall()
         result_dict["listings"] =results
