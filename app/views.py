@@ -421,11 +421,10 @@ def personalcarinfoPH(request):
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM listings WHERE owner = %s AND car_vin = %s", [request.POST['owner'],request.POST['car_vin']]) 
-    
     with connection.cursor() as cursor:
     cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM listings")
     numlist = cursor.fetchone() 
-	
+
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM listings ORDER BY owner")
@@ -519,7 +518,7 @@ def unavailablecarinfoPH(request):
     cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM unavailable")
     numcarunav = cursor.fetchone()   
 	
-	
+
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM unavailable ORDER BY unavailable")
