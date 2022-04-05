@@ -577,6 +577,8 @@ def addunavailablecarinfoPH(request): ############################# to change to
                 message = string
                 if 'duplicate key value violates unique constraint "unavailable_pkey"' in string:  
                     message = 'This unavailability period has already been recorded!' 
+                if 'insert or update on table "unavailable" violates foreign key constraint "unavailable_owner_car_vin_fkey"' in string:
+                    message = 'This owner does not own this car!' 
                 messages.error(request, message)
                 return render(request, "app/addunavailablecarinfoPH.html")
             return redirect('unavailablecarinfoPH') ##### i added this so it routes to unavailablecarinfo.html after 
