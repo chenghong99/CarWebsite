@@ -307,14 +307,14 @@ def admin(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT DISTINCT COUNT(*) FROM customer")
         numcust = cursor.fetchone() 
-        result_dict['numcust']=numcust
+       # result_dict['numcust']=numcust
         
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM customer ORDER BY email")
         personalinfo = cursor.fetchall()
 
-    result_dict['personalinfo'] = {'records' :personalinfo}
+    result_dict = {'records' :personalinfo, 'numcust' : numcust}
 
     return render(request,'app/admin.html',result_dict)
 
