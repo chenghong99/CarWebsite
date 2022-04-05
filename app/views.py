@@ -747,7 +747,7 @@ def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_ra
                             SELECT l.car_vin \
                             FROM listings l NATURAL JOIN unavailable u \
                             WHERE ((u.unavailable >= {0}) AND (u.unavailable <= {1}))\
-                            )""".format(pick_up,drop_off)
+                            )""".format(str(pick_up),str(drop_off))
         max_year = int(max_year)
         if max_year:
             query += " INTERSECT "
