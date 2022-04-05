@@ -307,6 +307,7 @@ def admin(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT DISTINCT COUNT(*) FROM customer")
         numcust = cursor.fetchone() 
+	result_dict['numcust']=numcust
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM customer ORDER BY email")
@@ -426,7 +427,7 @@ def personalcarinfoPH(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM listings")
         numlist = cursor.fetchone() 
-
+        result_dict['numlist']=numlist
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM listings ORDER BY owner")
@@ -519,7 +520,7 @@ def unavailablecarinfoPH(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM unavailable")
         numcarunav = cursor.fetchone()   
-	
+	result_dict['numcarunav']=numcarunav
 
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
@@ -601,7 +602,8 @@ def rentalcarinfoPH(request):
                 cursor.execute("DELETE FROM rentals WHERE car_vin = %s AND pick_up = %s", [request.POST['car_vin'],request.POST['pick_up']])
     with connection.cursor() as cursor:
         cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM rentals")
-        carsrented = cursor.fetchone()      
+        carsrented = cursor.fetchone()
+        result_dict['carsrented']=carsrented
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM rentals ORDER BY pick_up")
