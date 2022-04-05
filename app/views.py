@@ -757,7 +757,7 @@ def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_ra
                             )""".format(pick_up,drop_off)
         if max_year != 'x':
             query += " INTERSECT "
-            query += """SELECT * FROM listings WHERE year <= {}""".format(max_year)
+            query += """SELECT * FROM listings WHERE year >= {}""".format(max_year)
 
         if max_mileage!= 'x':
             query += " INTERSECT "
