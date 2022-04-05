@@ -22,8 +22,7 @@
         <!-- Security token by Django -->
         {% csrf_token %}
         <!-- form -->
-       <div id="div_id_car_vin" class="control-group"> <label for="id_car_vin" class="control-label requiredField">
-        Car VIN<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="car_vin" value="{{obj.0}}" maxlength="64" class="textinput textInput" required="" id="id_car_vin"> </div> </div> 
+      
       <div id="div_id_last_name" class="control-group"> <label for="id_carmake" class="control-label requiredField">
         Car Make<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="carmake" value="{{obj.1}}" maxlength="64" class="textinput textInput" required="" id="id_carmake"> </div> </div> 
       <div id="div_id_model" class="control-group"> <label for="id_model" class="control-label requiredField">
@@ -34,8 +33,7 @@
         Mileage<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="mileage" value="{{obj.4|slugify}}" class="dateinput" required="" id="id_since"> </div> </div> 
       <div id="div_id_rate" class="control-group"> <label for="id_rate" class="control-label requiredField">
         Rate<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="rate" value="{{obj.5}}" maxlength="16" class="textinput textInput" required="" id="id_rate"> </div> </div>
-      <div id="div_id_owner" class="control-group"> <label for="id_owner" class="control-label requiredField">
-        Owner<span class="asteriskField">*</span> </label> <div class="controls"> <input type="text" name="owner" value="{{obj.6}}" maxlength="256" class="textinput textInput" required="" id="id_rate"> </div> </div>
+     
         <br>
         <button type="submit" value="Update">Update</button>
     </form>
