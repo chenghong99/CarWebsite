@@ -44,27 +44,26 @@ insert into listings (car_vin, carmake, model, year, mileage, rate, owner) value
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('JN8AZ2KRXBT327366', 'Audi', 'TT', 2011, 59961, 83, 'awarry9@statcounter.com');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('5N1AN0NU1CN694264', 'Audi', 'TT', 2013, 59961, 120, 'chenghong123@gmail.com');
 
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('1N6AA0CA6DN030485', 'Mitsubishi', 1985, 63074, 96, 'cscourge0@cyberchimps.com');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('WAUVT64B43N357293', 'Aston Martin', 2012, 15116, 145, 'cscourge0@cyberchimps.com');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('WBAVS13528F652816', 'Toyota', 1997, 34515, 153, 'msigge1@drupal.org');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('2C3CDYBT0DH235026', 'Audi', 2007, 87442, 188, 'msigge1@drupal.org');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('1GYS3BEF0DR172209', 'Audi', 2001, 75755, 90, 'klevay2@google.es');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('SCFFDCCD4BG113234', 'Chevrolet', 2003, 60093, 134, 'klevay2@google.es');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('WAUGFAFR3CA829021', 'Lamborghini', 2008, 16925, 230, 'mwagstaff3@icio.us');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('WBADX7C50CE145301', 'Mazda', 1997, 83863, 124, 'mwagstaff3@icio.us');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('JH4DC43631S417813', 'Mercedes-Benz', 2005, 38223, 176, 'hoag4@amazon.de');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('WBA3B9C5XEF495361', 'Toyota', 2003, 81432, 215, 'hoag4@amazon.de');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('WA1LFBFP2BA079867', 'Jeep', 2006, 7224, 98, 'wkinchlea5@washingtonpost.com');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('4F2CY0C74BK311615', 'Mitsubishi', 1988, 44809, 100, 'wkinchlea5@washingtonpost.com');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('3VWML7AJ1EM678136', 'MINI', 2008, 45337, 87, 'bbrandone6@t.co');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('2G4WC582991054981', 'Chevrolet', 1993, 28555, 111, 'bbrandone6@t.co');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('WAUWGAFC8EN189582', 'Subaru', 1987, 13583, 90, 'bbrandone6@t.co');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('1G4GA5GR5FF383156', 'Toyota', 1998, 27912, 135, 'sharriday7@weather.com');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('1FTFW1E82AK279435', 'Mercedes-Benz', 2010, 86100, 217, 'mbarrowclough9@vimeo.com');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('1FMJK1F59AE506074', 'Lexus', 2012, 66411, 201, 'mbarrowclough9@vimeo.com');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('SCBZK22E91C553996', 'Toyota', 2009, 20462, 145, 'mbarrowclough9@vimeo.com');
-insert into listings (car_vin, carmake, year, mileage, rate, owner) values ('WAUDF58E05A992961', 'Subaru', 1997, 43184, 246, 'zbesseh@sourceforge.net');
-
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('2T1BU4EE6CC232685', 'Toyota', 'Xtra', 1992, 63659, 140, 'cscourge0@cyberchimps.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('1FTEW1CF4FF161559', 'Mercedes-Benz', '500E', 1993, 7580, 58, 'cscourge0@cyberchimps.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WBAEK734X5B154974', 'Land Rover', 'Range Rover', 1994, 30498, 73, 'cscourge0@cyberchimps.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WAUVC58E82A061102', 'Maserati', 'Quattroporte', 2008, 27345, 207, 'msigge1@drupal.org');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WBAUU33589A146911', 'Chevrolet', 'Sportvan G30', 1992, 18675, 57, 'msigge1@drupal.org');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('2HNYD285X7H814465', 'Mercury', 'Cougar', 2001, 89224, 51, ''msigge1@drupal.org');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('2G4GR5ECXB9463126', 'Mazda', 'Tribute', 2001, 28007, 174, 'klevay2@google.es');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('KNADM5A38D6873300', 'Chevrolet', 'Venture', 2000, 30694, 151, 'klevay2@google.es');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('4T1BF1FK3EU844115', 'Chevrolet', 'Astro', 1993, 41495, 87, 'mwagstaff3@icio.us');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WAUJT54B34N769327', 'Hyundai', 'Entourage', 2007, 36661, 148, 'hoag4@amazon.de');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WAUDF98E35A106025', 'BMW', '5 Series', 2002, 64205, 157, 'hoag4@amazon.de');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WP0AB2A93FS423837', 'Lexus', 'RX', 2012, 87802, 88, 'hoag4@amazon.de');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WBAET37452N601060', 'Dodge', 'Journey', 2011, 46624, 231, 'wkinchlea5@washingtonpost.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WAUDF48H67K533550', 'Mercedes-Benz', '600SEL', 1993, 63824, 147, 'wkinchlea5@washingtonpost.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WA1LMBFEXCD639056', 'Hyundai', 'Accent', 2010, 95281, 159, 'bbrandone6@t.co');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WBAAX13433P557899', 'Land Rover', 'Freelander', 2002, 18043, 64, 'bbrandone6@t.co');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('SCFHDDAJ0BA471926', 'Pontiac', 'Monterey', 2005, 70524, 81,'sharriday7@weather.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('5GAKVDED2CJ682893', 'Mitsubishi', 'Precis', 1993, 98821, 201, 'mbarrowclough9@vimeo.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('1FTSW2B57AE970599', 'Dodge', 'Ram Van 2500', 1998, 28049, 65, 'mbarrowclough9@vimeo.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('JH4CL96814C916811', 'Toyota', 'Yaris', 2012, 40909, 92, 'zbesseh@sourceforge.net');
 
 insert into unavailable (car_vin, owner, unavailable) values ('3N1AB6AP3AL362912', 'ksprulls4@fda.gov', '2022-12-14');
 insert into unavailable (car_vin, owner, unavailable) values ('3N1AB6AP3AL362912', 'ksprulls4@fda.gov', '2023-01-24');
