@@ -733,7 +733,6 @@ def search(request):
         if not max_rate:
             max_rate = 0
         
-        filters_str = str(str(max_year if max_year else 0)+'/'+str(max_mileage if max_mileage else 0)+'/'+str(min_rate if min_rate else 0)+'/'+str(max_rate if max_rate else 0))
         return redirect('search_results',pick_up,drop_off,max_year,max_mileage,min_rate,max_rate,carmakes_id)
     return render(request,'app/search.html',filter_dict)
 
@@ -748,7 +747,6 @@ def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_ra
                             FROM listings l NATURAL JOIN unavailable u \
                             WHERE ((u.unavailable >= '{}') AND (u.unavailable <= '{}'))\
                             )""".format(pick_up,drop_off)
-        max_year = int(max_year)
         if max_year:
             query += " INTERSECT "
             query += """SELECT * FROM listings WHERE year <= {}""".format(max_year)
@@ -764,6 +762,22 @@ def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_ra
             query += " INTERSECT "
             query += """SELECT * FROM listings WHERE rate <= {}""".format(max_rate)
 
+        if carmakes_id:
+            cursor.execute("SELECT DISTINCT carmake FROM listings ORDER BY carmake")
+            carmakes_all = cursor.fetchall()
+            carmakes = []
+            for i in carmakes_id:
+                carmakes.append(carmakes_all[int(i)])
+            temp = ""
+            for carmake in carmakes:
+                if temp:
+                    temp += " UNION "
+                temp += """SELECT * FROM listings l WHERE l.carmake = '{}'""".format(carmake)
+
+            if temp:
+                query += " INTERSECT "
+                query += "({})".format(temp)
+                
         cursor.execute(query)
         results = cursor.fetchall()
         result_dict["listings"] =results
