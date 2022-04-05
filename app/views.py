@@ -314,7 +314,7 @@ def admin(request):
         cursor.execute("SELECT * FROM customer ORDER BY email")
         personalinfo = cursor.fetchall()
 
-    result_dict['personalinfo'] = personalinfo
+    result_dict['personalinfo'] = {'records' :personalinfo}
 
     return render(request,'app/admin.html',result_dict)
 
