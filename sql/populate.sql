@@ -38,11 +38,6 @@ values
 ('sbompass8@cnet.com','ksprulls4@fda.gov','JN8AS1MU7AM855309','2022-09-17','2022-09-17',35895),
 ('jgailor7@rediff.com','ksprulls4@fda.gov','5N1AR2MM8FC452719','2022-09-17','2022-09-17',35423);
 
-insert into rentals (owner,renter,car_vin,pick_up,drop_off,rental_fee)
-values
-('awarry9@statcounter.com','ksprulls4@fda.gov','JN8AZ2KRXBT327366','2022-09-17','2022-09-17',62219),
-('sbompass8@cnet.com','ksprulls4@fda.gov','JN8AS1MU7AM855309','2022-09-17','2022-09-17',35895),
-('jgailor7@rediff.com','ksprulls4@fda.gov','5N1AR2MM8FC452719','2022-09-17','2022-09-17',35423);
 
 insert into rentals (owner,renter,car_vin,pick_up,drop_off,rental_fee)
 values
