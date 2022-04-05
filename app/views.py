@@ -304,7 +304,9 @@ def admin(request):
                 ## can cursor.execute include multiple queries???? COZ NEED DELETE FROM TABLE BEFORE CAN DELETE FROM MASTERTABLE
                 ## DO I NEED TO MAKE SURE THAT?? COZ SCHEMA GOT ON DELETE CASCADE
                 #################################################################################################################################
-
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT DISTINCT COUNT(*) FROM customer")
+        numcust = cursor.fetchone() 
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM customer ORDER BY email")
@@ -422,8 +424,8 @@ def personalcarinfoPH(request):
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM listings WHERE owner = %s AND car_vin = %s", [request.POST['owner'],request.POST['car_vin']]) 
     with connection.cursor() as cursor:
-    cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM listings")
-    numlist = cursor.fetchone() 
+        cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM listings")
+        numlist = cursor.fetchone() 
 
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
@@ -515,8 +517,8 @@ def unavailablecarinfoPH(request):
                 cursor.execute("DELETE FROM unavailable WHERE car_vin = %s AND unavailable = %s", [request.POST['car_vin'],request.POST['unavailable']])
     
     with connection.cursor() as cursor:
-    cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM unavailable")
-    numcarunav = cursor.fetchone()   
+        cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM unavailable")
+        numcarunav = cursor.fetchone()   
 	
 
     ## Use raw query to get all objects
