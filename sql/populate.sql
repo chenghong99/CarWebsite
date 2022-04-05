@@ -76,12 +76,31 @@ insert into unavailable (car_vin, owner, unavailable) values ('WA1LMBFE7ED541878
 insert into unavailable (car_vin, owner, unavailable) values ('WAUSFAFL2BA782648', 'sbompass8@cnet.com', '2022-12-07');
 insert into unavailable (car_vin, owner, unavailable) values ('WAUSFAFL2BA782648', 'sbompass8@cnet.com', '2022-08-17');
 
+insert into unavailable (car_vin, owner, unavailable) values ('WAUJT54B34N769327', 'hoag4@amazon.de', '2022-12-14');
+insert into unavailable (car_vin, owner, unavailable) values ('WAUDF98E35A106025', 'hoag4@amazon.de', '2023-01-24');
+insert into unavailable (car_vin, owner, unavailable) values ('WP0AB2A93FS423837', 'hoag4@amazon.de', '2023-01-10');
+insert into unavailable (car_vin, owner, unavailable) values ('WBAET37452N601060', 'wkinchlea5@washingtonpost.com', '2022-03-02');
+insert into unavailable (car_vin, owner, unavailable) values ('WAUDF48H67K533550', 'wkinchlea5@washingtonpost.com', '2022-09-22');
+insert into unavailable (car_vin, owner, unavailable) values ('WA1LMBFEXCD639056', 'bbrandone6@t.co', '2022-09-23');
+insert into unavailable (car_vin, owner, unavailable) values ('WBAAX13433P557899', 'bbrandone6@t.co', '2022-08-04');
+insert into unavailable (car_vin, owner, unavailable) values ('SCFHDDAJ0BA471926', 'sharriday7@weather.com', '2022-12-23');
+insert into unavailable (car_vin, owner, unavailable) values ('5GAKVDED2CJ682893', 'mbarrowclough9@vimeo.com', '2022-12-07');
+insert into unavailable (car_vin, owner, unavailable) values ('1FTSW2B57AE970599', 'mbarrowclough9@vimeo.com', '2022-08-17');
+
 insert into rentals (owner,renter,car_vin,pick_up,drop_off,rental_fee)
 values
 ('awarry9@statcounter.com','ksprulls4@fda.gov','JN8AZ2KRXBT327366','2022-09-17','2022-09-17',83),
 ('sbompass8@cnet.com','ksprulls4@fda.gov','JN8AS1MU7AM855309','2022-09-17','2022-09-17',62),
-('jgailor7@rediff.com','ksprulls4@fda.gov','5N1AR2MM8FC452719','2022-09-17','2022-09-17',199);
-
+('jgailor7@rediff.com','ksprulls4@fda.gov','5N1AR2MM8FC452719','2022-09-17','2022-09-17',199),
+('hoag4@amazon.de','awarry9@statcounter.com', 'WAUJT54B34N769327','2022-12-14','2022-12-14',94),
+('hoag4@amazon.de','sbompass8@cnet.com', 'WAUDF98E35A106025','2022-12-14','2022-12-14',118),
+('wkinchlea5@washingtonpost.com','sbompass8@cnet.com', 'WBAET37452N601060','2022-10-14','2022-10-14',102),
+('wkinchlea5@washingtonpost.com','awarry9@statcounter.com', 'WAUDF48H67K533550','2022-11-14','2022-11-14',105),
+('bbrandone6@t.co','sbompass8@cnet.com', 'WA1LMBFEXCD639056','2022-03-15','2022-03-15',109),
+('bbrandone6@t.co','awarry9@statcounter.com', 'WBAAX13433P557899','2022-04-16','2022-04-16',112),
+('mbarrowclough9@vimeo.com','jgailor7@rediff.com', '5GAKVDED2CJ682893','2022-05-17','2022-05-17',92),
+('mbarrowclough9@vimeo.com','sbompass8@cnet.com', '1FTSW2B57AE970599','2022-06-18','2022-06-18',80),
+('hoag4@amazon.de','jgailor7@rediff.com', 'WP0AB2A93FS423837', '2022-12-14','2022-12-14',165);
 
 insert into rentals (owner,renter,car_vin,pick_up,drop_off,rental_fee)
 values
