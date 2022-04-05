@@ -9,6 +9,8 @@ insert into customer (first_name, last_name, username, dob, password, confirmpas
 insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Jarred', 'Gailor', 'jgailor7', '10/2/2001', 'RMgzpcr', 'RMgzpcr', 'jgailor7@rediff.com',96539517);
 insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Saunders', 'Bompass', 'sbompass8', '8/9/2001', 'wShpblV', 'wShpblV', 'sbompass8@cnet.com',96539517);
 insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('Amy', 'Warry', 'awarry9', '1/11/2002', 'ZZvye03xvN8', 'ZZvye03xvN8', 'awarry9@statcounter.com',96539517);
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('cheng', 'h', 'ch1234', '1/12/2002', 'nus', 'nus', 'chenghong1234@gmail.com',92239517);
+insert into customer (first_name, last_name, username, dob, password, confirmpassword, email, mobile_number) values ('c', 'hong', 'ch123', '1/12/2002', 'nus', 'nus', 'chenghong123@gmail.com',93339517);
 
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('3N1AB6AP3AL362912', 'Isuzu', 'Ascender', 2007, 80643, 50026, 'ksprulls4@fda.gov');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('5UMDU93557L734848', 'Volvo', 'XC70', 2007, 51820, 19742, 'ksprulls4@fda.gov');
@@ -20,6 +22,7 @@ insert into listings (car_vin, carmake, model, year, mileage, rate, owner) value
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('JN8AS1MU7AM855309', 'Chrysler', 'Town & Country', 1993, 47443, 35895, 'sbompass8@cnet.com');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('5N1AN0NU1CN694265', 'Chevrolet', 'Suburban 1500', 1995, 19175, 45717, 'awarry9@statcounter.com');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('JN8AZ2KRXBT327366', 'Audi', 'TT', 2011, 59961, 62219, 'awarry9@statcounter.com');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('5N1AN0NU1CN694264', 'Audi', 'TT', 2013, 59961, 62219, 'chenghong123@gmail.com');
 
 insert into unavailable (car_vin, owner, unavailable) values ('3N1AB6AP3AL362912', 'ksprulls4@fda.gov', '2022-12-14');
 insert into unavailable (car_vin, owner, unavailable) values ('3N1AB6AP3AL362912', 'ksprulls4@fda.gov', '2023-01-24');
