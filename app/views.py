@@ -681,12 +681,12 @@ def search(request):
         cursor.execute("SELECT DISTINCT carmake, 'No' FROM listings ORDER BY carmake")
         carmakes = cursor.fetchall()
 
-    #     cursor.execute("SELECT DISTINCT model, 'No' FROM listings ORDER BY model")
-    #     models = cursor.fetchall()
+        cursor.execute("SELECT DISTINCT model, 'No' FROM listings ORDER BY model")
+        models = cursor.fetchall()
 
     filter_dict = {}
     filter_dict['carmakes'] = carmakes
-    # filter_dict['models'] = models
+    filter_dict['models'] = models
     filter_dict['max_year'] = ''
     filter_dict['max_mileage'] = ''
     filter_dict['min_rate'] = ''
@@ -709,13 +709,14 @@ def search(request):
                 carmakes_id += str(i)
         else:
             carmakes_id = 'x'
-            
-        # models = request.POST.getlist("models")
-        # models_id = '0'
-        # if models:
-        #     filter_dict['models'] = models
-        #     for i in range(len(models)):
-        #         models_id += str(i)
+
+        models = request.POST.getlist("models")
+        if models:
+            models_id = ''
+            for i in range(len(models)):
+                models_id += str(i)
+        else:
+            models_id = 'x'
         
         max_year = request.POST.get("max_year") 
         if not max_year:
@@ -733,12 +734,12 @@ def search(request):
         if not max_rate:
             max_rate = 'x'
         
-        return redirect('search_results',pick_up,drop_off,max_year,max_mileage,min_rate,max_rate,carmakes_id)
+        return redirect('search_results',pick_up,drop_off,max_year,max_mileage,min_rate,max_rate,carmakes_id,models_id)
     return render(request,'app/search.html',filter_dict)
 
 
 #Hannah
-def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_rate,carmakes_id):
+def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_rate,carmakes_id,models_id):
     with connection.cursor() as cursor:
         result_dict = {}
         query = """SELECT * FROM listings l \
@@ -773,6 +774,22 @@ def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_ra
                 if temp:
                     temp += " UNION "
                 temp += """SELECT * FROM listings l WHERE l.carmake = '{}'""".format(carmake)
+
+            if temp:
+                query += " INTERSECT "
+                query += "({})".format(temp)
+
+        if models_id != 'x':  
+            cursor.execute("SELECT DISTINCT model FROM listings ORDER BY model")
+            models_all = cursor.fetchall()
+            models = []
+            for i in models_id:
+                models.append(models_all[int(i)][0])
+            temp = ""
+            for model in models:
+                if temp:
+                    temp += " UNION "
+                temp += """SELECT * FROM listings l WHERE l.model = '{}'""".format(model)
 
             if temp:
                 query += " INTERSECT "
