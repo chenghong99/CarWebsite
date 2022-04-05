@@ -740,8 +740,8 @@ def search(request):
 def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_rate):
     with connection.cursor() as cursor:
         result_dict = {}
-        pick_up = pick_up.strftime('%Y-%m-%d')
-        drop_off = drop_off.strftime('%Y-%m-%d')
+        #pick_up = pick_up.strftime('%Y-%m-%d')
+        #drop_off = drop_off.strftime('%Y-%m-%d')
         query = """SELECT * FROM listings l \
                             WHERE l.car_vin NOT IN (\
                             SELECT l.car_vin \
