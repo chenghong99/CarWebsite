@@ -677,15 +677,15 @@ def addrentalcarinfoPH(request):
 
 #Hannah
 def search(request):
-    # with connection.cursor() as cursor:
-    #     cursor.execute("SELECT DISTINCT carmake, 'No' FROM listings ORDER BY carmake")
-    #     carmakes = cursor.fetchall()
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT DISTINCT carmake, 'No' FROM listings ORDER BY carmake")
+        carmakes = cursor.fetchall()
 
     #     cursor.execute("SELECT DISTINCT model, 'No' FROM listings ORDER BY model")
     #     models = cursor.fetchall()
 
     filter_dict = {}
-    # filter_dict['carmakes'] = carmakes
+    filter_dict['carmakes'] = carmakes
     # filter_dict['models'] = models
     filter_dict['max_year'] = ''
     filter_dict['max_mileage'] = ''
@@ -701,12 +701,14 @@ def search(request):
             messages.error(request,"Pick-up date cannot be after drop-off date")
             return render(request,'app/search.html')
 
-        # carmakes = request.POST.getlist("carmakes")
-        # carmakes_id = '0'
-        # if carmakes:
-        #     filter_dict['carmakes'] = carmakes
-        #     for i in range(len(carmakes)):
-        #         carmakes_id += str(i)
+        carmakes = request.POST.getlist("carmakes")
+        
+        if carmakes:
+            carmakes_id = ''
+            for i in range(len(carmakes)):
+                carmakes_id += str(i)
+        else:
+            carmakes_id = 0
             
         # models = request.POST.getlist("models")
         # models_id = '0'
@@ -732,16 +734,14 @@ def search(request):
             max_rate = 0
         
         filters_str = str(str(max_year if max_year else 0)+'/'+str(max_mileage if max_mileage else 0)+'/'+str(min_rate if min_rate else 0)+'/'+str(max_rate if max_rate else 0))
-        return redirect('search_results',pick_up,drop_off,max_year,max_mileage,min_rate,max_rate)
+        return redirect('search_results',pick_up,drop_off,max_year,max_mileage,min_rate,max_rate,carmakes_id)
     return render(request,'app/search.html',filter_dict)
 
 
 #Hannah
-def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_rate):
+def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_rate,carmakes_id):
     with connection.cursor() as cursor:
         result_dict = {}
-        #pick_up = pick_up.strftime('%Y-%m-%d')
-        #drop_off = drop_off.strftime('%Y-%m-%d')
         query = """SELECT * FROM listings l \
                             WHERE l.car_vin NOT IN (\
                             SELECT l.car_vin \
@@ -763,7 +763,7 @@ def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_ra
         if max_rate:
             query += " INTERSECT "
             query += """SELECT * FROM listings WHERE rate <= {}""".format(max_rate)
-            
+
         cursor.execute(query)
         results = cursor.fetchall()
         result_dict["listings"] =results
