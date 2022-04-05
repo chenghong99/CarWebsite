@@ -798,6 +798,8 @@ def search_results(request,pick_up,drop_off,max_year,max_mileage,min_rate,max_ra
         cursor.execute(query)
         results = cursor.fetchall()
         result_dict["listings"] =results
+        result_dict["pick_up"] = pick_up
+        result_dict["drop_off"] = drop_off
 
     return render(request,'app/search_results.html',result_dict)
 
