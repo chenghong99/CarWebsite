@@ -520,7 +520,7 @@ def unavailablecarinfoPH(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM unavailable")
         numcarunav = cursor.fetchone()   
-	result_dict['numcarunav']=numcarunav
+        result_dict['numcarunav']=numcarunav
 
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
