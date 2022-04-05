@@ -63,7 +63,7 @@ insert into listings (car_vin, carmake, model, year, mileage, rate, owner) value
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('SCFHDDAJ0BA471926', 'Pontiac', 'Monterey', 2005, 70524, 81,'sharriday7@weather.com');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('5GAKVDED2CJ682893', 'Mitsubishi', 'Precis', 1993, 98821, 201, 'mbarrowclough9@vimeo.com');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('1FTSW2B57AE970599', 'Dodge', 'Ram Van 2500', 1998, 28049, 65, 'mbarrowclough9@vimeo.com');
-insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('JH4CL96814C916811', 'Toyota', 'Yaris', 2012, 40909, 92, 'zbesseh@sourceforge.net');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('JH4CL96814C916811', 'Toyota', 'Yaris', 2012, 40909, 92, 'lebbageg@unc.edu');
 
 insert into unavailable (car_vin, owner, unavailable) values ('3N1AB6AP3AL362912', 'ksprulls4@fda.gov', '2022-12-14');
 insert into unavailable (car_vin, owner, unavailable) values ('3N1AB6AP3AL362912', 'ksprulls4@fda.gov', '2023-01-24');
