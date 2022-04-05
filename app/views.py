@@ -297,24 +297,20 @@ def addcar(request):
 ##Peng Hao
 def admin(request):
     ## Delete customer
-    result_dict = {}
     if request.POST:
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM customer WHERE email = %s", [request.POST['email']])
-    result_dict['numcust']=''
-    result_dict['personalinfo']=''
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT DISTINCT COUNT(*) FROM customer")
-        numcust = cursor.fetchone() 
-       # result_dict['numcust']=numcust
-        
+                cursor.execute("DELETE FROM customer WHERE email = %s", [request.POST['email']]) ## gotta make sure the constraint satisfied...foreign key
+                ## can cursor.execute include multiple queries???? COZ NEED DELETE FROM TABLE BEFORE CAN DELETE FROM MASTERTABLE
+                ## DO I NEED TO MAKE SURE THAT?? COZ SCHEMA GOT ON DELETE CASCADE
+                #################################################################################################################################
+
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM customer ORDER BY email")
         personalinfo = cursor.fetchall()
 
-    result_dict = {'records' :personalinfo, 'numcust' : numcust}
+    result_dict = {'records': personalinfo}
 
     return render(request,'app/admin.html',result_dict)
 
@@ -419,18 +415,15 @@ def editpersonalinfoPH(request, email):
 
 def personalcarinfoPH(request):
     """Shows the personalcarinfo page"""
-    result_dict = {}
+    
     ## Delete listing
     if request.POST:
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM listings WHERE owner = %s AND car_vin = %s", [request.POST['owner'],request.POST['car_vin']]) 
-    result_dict['numlist']=''
-    result_dict['personalcarinfo']=''
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM listings")
-        numlist = cursor.fetchone() 
-        result_dict['numlist']=numlist
+                cursor.execute("DELETE FROM listings WHERE owner = %s AND car_vin = %s", [request.POST['owner'],request.POST['car_vin']]) ## gotta make sure the constraint satisfied...foreign key
+                ## can cursor.execute include multiple queries???? COZ NEED DELETE FROM TABLE BEFORE CAN DELETE FROM MASTERTABLE
+                ## DO I NEED TO MAKE SURE THAT?? COZ SCHEMA GOT ON DELETE CASCADE
+                #################################################################################################################################
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM listings ORDER BY owner")
@@ -513,19 +506,13 @@ def addpersonalcarinfoPH(request):
 
 def unavailablecarinfoPH(request):
     """Shows the unavailablecarinfo page"""
-    result_dict = {}
+    
     ## Delete unavailable
     if request.POST:
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM unavailable WHERE car_vin = %s AND unavailable = %s", [request.POST['car_vin'],request.POST['unavailable']])
-    result_dict['numcarunav']=''
-    result_dict['unavailablecarinfo']=''
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM unavailable")
-        numcarunav = cursor.fetchone()   
-        result_dict['numcarunav']=numcarunav
-
+                
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM unavailable ORDER BY unavailable")
@@ -598,18 +585,13 @@ def addunavailablecarinfoPH(request): ############################# to change to
 
 def rentalcarinfoPH(request):
     """Shows the rentalcarinfo page"""
-    result_dict = {}    
+    
     ## Delete rental
     if request.POST:
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
                 cursor.execute("DELETE FROM rentals WHERE car_vin = %s AND pick_up = %s", [request.POST['car_vin'],request.POST['pick_up']])
-    result_dict['carsrented']=''
-    result_dict['rentalcarinfo']=''
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT DISTINCT COUNT(car_vin) FROM rentals")
-        carsrented = cursor.fetchone()
-        result_dict['carsrented']=carsrented
+                
     ## Use raw query to get all objects
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM rentals ORDER BY pick_up")
