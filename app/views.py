@@ -835,7 +835,7 @@ def book(request, car_vin,pick_up,drop_off):
                             FROM listings l NATURAL JOIN unavailable u \
                             WHERE ((u.unavailable >= %s) AND (u.unavailable <= %s))",[pick_up,drop_off])
             unavail_vins = cursor.fetchall()
-            is_car_unavail = car_vin in unavail_vins
+            is_car_unavail = car_vin in list(map(lambda x: x[0],unavail_vins))
             #check if dates are not in unavailable 
             if is_car_unavail:
                 message = "Error! Car is unavailable on selected dates"
