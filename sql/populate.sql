@@ -49,7 +49,7 @@ insert into listings (car_vin, carmake, model, year, mileage, rate, owner) value
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WBAEK734X5B154974', 'Land Rover', 'Range Rover', 1994, 30498, 73, 'cscourge0@cyberchimps.com');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WAUVC58E82A061102', 'Maserati', 'Quattroporte', 2008, 27345, 207, 'msigge1@drupal.org');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('WBAUU33589A146911', 'Chevrolet', 'Sportvan G30', 1992, 18675, 57, 'msigge1@drupal.org');
-insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('2HNYD285X7H814465', 'Mercury', 'Cougar', 2001, 89224, 51, ''msigge1@drupal.org');
+insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('2HNYD285X7H814465', 'Mercury', 'Cougar', 2001, 89224, 51, 'msigge1@drupal.org');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('2G4GR5ECXB9463126', 'Mazda', 'Tribute', 2001, 28007, 174, 'klevay2@google.es');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('KNADM5A38D6873300', 'Chevrolet', 'Venture', 2000, 30694, 151, 'klevay2@google.es');
 insert into listings (car_vin, carmake, model, year, mileage, rate, owner) values ('4T1BF1FK3EU844115', 'Chevrolet', 'Astro', 1993, 41495, 87, 'mwagstaff3@icio.us');
