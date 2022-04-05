@@ -297,6 +297,7 @@ def addcar(request):
 ##Peng Hao
 def admin(request):
     ## Delete customer
+    result_dict = {}
     if request.POST:
         if request.POST['action'] == 'delete':
             with connection.cursor() as cursor:
@@ -418,7 +419,7 @@ def editpersonalinfoPH(request, email):
 
 def personalcarinfoPH(request):
     """Shows the personalcarinfo page"""
-    
+    result_dict = {}
     ## Delete listing
     if request.POST:
         if request.POST['action'] == 'delete':
@@ -512,7 +513,7 @@ def addpersonalcarinfoPH(request):
 
 def unavailablecarinfoPH(request):
     """Shows the unavailablecarinfo page"""
-    
+    result_dict = {}
     ## Delete unavailable
     if request.POST:
         if request.POST['action'] == 'delete':
@@ -597,7 +598,7 @@ def addunavailablecarinfoPH(request): ############################# to change to
 
 def rentalcarinfoPH(request):
     """Shows the rentalcarinfo page"""
-    
+    result_dict = {}    
     ## Delete rental
     if request.POST:
         if request.POST['action'] == 'delete':
