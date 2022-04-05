@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS unavailable(
 
 CREATE TABLE IF NOT EXISTS rentals(
     owner VARCHAR(256) REFERENCES customer(email) DEFERRABLE,
-    renter VARCHAR(256) REFERENCES customer(email) DEFERRABLE,
+    renter VARCHAR(256) REFERENCES customer(email) ON DELETE CASCADE,
     car_vin VARCHAR(17),
     pick_up DATE,
     drop_off DATE NOT NULL,
