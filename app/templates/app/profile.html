@@ -86,6 +86,7 @@
             <th>Pick Up Date</th>
             <th>Return date</th>
             <th>Total Fee</th>
+            <th>Action</th>
         </thead>
         {% for car in myrental %}
         <tr>
@@ -95,6 +96,7 @@
             <td> {{ car.3 }} </td>
             <td> {{ car.4 }} </td>
             <td> {{ car.5 }} </td>
+            <a><button>Edit</button></a>
         </tr>
         {% endfor %}
     </table>
